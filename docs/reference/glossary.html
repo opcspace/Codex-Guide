@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>术语速查 · Codex 实践指南</title>
+  <meta name="description" content="Codex 常见概念、配置与协作术语的中文解释。"><meta name="theme-color" content="#0b100d">
+  <meta property="og:title" content="术语速查 · Codex 实践指南"><meta property="og:description" content="Codex 常见概念、配置与协作术语的中文解释。"><meta property="og:type" content="article">
+  <link rel="canonical" href="https://opcspace.github.io/Codex-Guide/reference/glossary.html">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css"><link rel="stylesheet" href="/Codex-Guide/assets/reading.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body id="top">
+  <div class="reading-progress" data-progress aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>17 篇指南 · 更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link"  href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link"  href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link"  href="/Codex-Guide/start/install-config.html">安装与基础配置</a><a class="nav-link"  href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link"  href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link"  href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link"  href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a><a class="nav-link"  href="/Codex-Guide/practices/end-to-end.html">端到端开发案例</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link"  href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link"  href="/Codex-Guide/workflows/configuration.html">配置、模式与 Profiles</a><a class="nav-link"  href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link"  href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link"  href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link"  href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link"  href="/Codex-Guide/reference/troubleshooting.html">故障排查手册</a><a class="nav-link active" aria-current="page" href="/Codex-Guide/reference/glossary.html">术语速查</a><a class="nav-link"  href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content">
+    <div class="page-meta"><span>安全与参考</span><i></i><span>约 3 分钟</span><i></i><span>核查于 2026-07-13</span></div>
+    <article class="article"><h1>术语速查</h1>
+<p>这份速查表用于统一团队语言。产品字段和界面可能变化，精确定义以官方当前文档为准。</p>
+<h2 id="agent">Agent<a class="heading-anchor" href="#agent" aria-label="复制此章节链接">#</a></h2>
+<p>能够读取上下文、规划步骤、调用工具并根据结果继续工作的执行主体。它不等于“自动正确”，仍需要边界、权限和验收。</p>
+<h2 id="agents-md">AGENTS.md<a class="heading-anchor" href="#agents-md" aria-label="复制此章节链接">#</a></h2>
+<p>放在仓库中的持久指导文件，用于告诉 Codex 项目结构、命令、风格和禁区。子目录可有更具体的规则；应保持短、可执行、不过期。</p>
+<h2 id="approval-policy">Approval policy<a class="heading-anchor" href="#approval-policy" aria-label="复制此章节链接">#</a></h2>
+<p>决定哪些动作必须由人确认的审批策略。审批不是障碍，而是控制外部副作用和不可逆操作的闸门。</p>
+<h2 id="automation">Automation<a class="heading-anchor" href="#automation" aria-label="复制此章节链接">#</a></h2>
+<p>在明确触发条件下重复执行已经验证的任务。自动化前要先手动跑通，并定义失败处理和输出位置。</p>
+<h2 id="codex-cli">Codex CLI<a class="heading-anchor" href="#codex-cli" aria-label="复制此章节链接">#</a></h2>
+<p>在终端中使用 Codex 的入口，适合仓库级开发、脚本化执行和与本地工具配合。</p>
+<h2 id="codex-cloud">Codex Cloud<a class="heading-anchor" href="#codex-cloud" aria-label="复制此章节链接">#</a></h2>
+<p>在云端隔离环境中执行任务的形态，适合后台运行、并行任务和交付可审查变更。可用能力以账户和组织设置为准。</p>
+<h2 id="context">Context<a class="heading-anchor" href="#context" aria-label="复制此章节链接">#</a></h2>
+<p>代理当前可用的信息，包括对话、文件、仓库规则、工具结果和连接器内容。更多上下文不总是更好；相关、最新、结构清楚更重要。</p>
+<h2 id="mcp">MCP<a class="heading-anchor" href="#mcp" aria-label="复制此章节链接">#</a></h2>
+<p>Model Context Protocol。让客户端以标准方式连接外部工具和数据源。接入前应审查权限、数据范围和服务器实现。</p>
+<h2 id="non-interactive-mode">Non-interactive mode<a class="heading-anchor" href="#non-interactive-mode" aria-label="复制此章节链接">#</a></h2>
+<p>无需持续人工对话、以命令方式运行 Codex 的模式，常用于脚本和 CI。必须提前定义权限、输入、输出和失败码。</p>
+<h2 id="profile">Profile<a class="heading-anchor" href="#profile" aria-label="复制此章节链接">#</a></h2>
+<p>一组可命名、可切换的配置组合，用于区分审查、开发或自动化等运行场景。具体支持方式以当前版本为准。</p>
+<h2 id="sandbox">Sandbox<a class="heading-anchor" href="#sandbox" aria-label="复制此章节链接">#</a></h2>
+<p>限制进程可读写路径、网络或系统能力的隔离边界。它降低误操作风险，但不能替代任务审查和秘密管理。</p>
+<h2 id="skill">Skill<a class="heading-anchor" href="#skill" aria-label="复制此章节链接">#</a></h2>
+<p>把一类任务的说明、资源或脚本封装为可复用能力。好的 Skill 有明确触发条件、输入输出和安全边界。</p>
+<h2 id="thread-task">Thread / Task<a class="heading-anchor" href="#thread-task" aria-label="复制此章节链接">#</a></h2>
+<p>一段围绕目标持续推进的上下文。在不同界面可能称为任务、线程或会话。长任务应定期总结当前状态和剩余工作。</p>
+<h2 id="worktree">Worktree<a class="heading-anchor" href="#worktree" aria-label="复制此章节链接">#</a></h2>
+<p>Git 提供的多工作目录机制，让多个分支在独立目录并行工作，减少任务互相覆盖。创建前仍需确认分支和未提交改动。</p>
+<h2 id="验证闭环">验证闭环<a class="heading-anchor" href="#验证闭环" aria-label="复制此章节链接">#</a></h2>
+<p>“提出目标 → 修改 → 运行检查 → 审查差异 → 披露未验证项”的完整链路。只有生成代码而没有验证，不算完成交付。</p>
+<h2 id="最小权限">最小权限<a class="heading-anchor" href="#最小权限" aria-label="复制此章节链接">#</a></h2>
+<p>只授予完成当前任务所需的最少文件、命令、网络和账户能力。任务结束后不应无理由保留临时高权限。</p>
+</article>
+    <nav class="page-nav" aria-label="文章导航">
+    <a class="previous" href="/Codex-Guide/reference/troubleshooting.html"><small>← 上一篇</small><strong>故障排查手册</strong></a>
+    <a class="next" href="/Codex-Guide/reference/sources.html"><small>下一篇 →</small><strong>官方资料索引</strong></a>
+  </nav>
+    <footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方指南</span></footer>
+  </main>
+  <aside class="toc" aria-label="页内目录"><p>ON THIS PAGE</p><nav><a class="toc-level-2" href="#agent">Agent</a><a class="toc-level-2" href="#agents-md">AGENTS.md</a><a class="toc-level-2" href="#approval-policy">Approval policy</a><a class="toc-level-2" href="#automation">Automation</a><a class="toc-level-2" href="#codex-cli">Codex CLI</a><a class="toc-level-2" href="#codex-cloud">Codex Cloud</a><a class="toc-level-2" href="#context">Context</a><a class="toc-level-2" href="#mcp">MCP</a><a class="toc-level-2" href="#non-interactive-mode">Non-interactive mode</a><a class="toc-level-2" href="#profile">Profile</a><a class="toc-level-2" href="#sandbox">Sandbox</a><a class="toc-level-2" href="#skill">Skill</a><a class="toc-level-2" href="#thread-task">Thread / Task</a><a class="toc-level-2" href="#worktree">Worktree</a><a class="toc-level-2" href="#验证闭环">验证闭环</a><a class="toc-level-2" href="#最小权限">最小权限</a></nav><a class="toc-top" href="#top">返回顶部 ↑</a></aside></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，快速定位实践"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>

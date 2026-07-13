@@ -1,0 +1,42 @@
+name: 内容更新
+description: 报告过期资料、失效链接或建议新的官方实践
+title: "[内容] "
+labels: ["content"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 类型
+      options:
+        - 事实或入口已过期
+        - 官方链接失效
+        - 建议新增实践
+        - 排版或站点问题
+        - 其他内容问题
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: 涉及页面
+      placeholder: 请输入站点页面或仓库文件链接
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题与建议
+      description: 请说明当前内容、预期内容以及为什么需要调整。
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 官方依据
+      description: 若涉及产品事实，请提供官方页面链接。
+  - type: textarea
+    id: verify
+    attributes:
+      label: 核查信息
+      description: 请提供核查日期、客户端版本或可复现步骤；注意脱敏。
+

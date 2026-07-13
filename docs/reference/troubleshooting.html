@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>故障排查手册 · Codex 实践指南</title>
+  <meta name="description" content="Codex 登录、配置、权限、命令、网络与 Git 工作流的系统排查清单。"><meta name="theme-color" content="#0b100d">
+  <meta property="og:title" content="故障排查手册 · Codex 实践指南"><meta property="og:description" content="Codex 登录、配置、权限、命令、网络与 Git 工作流的系统排查清单。"><meta property="og:type" content="article">
+  <link rel="canonical" href="https://opcspace.github.io/Codex-Guide/reference/troubleshooting.html">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css"><link rel="stylesheet" href="/Codex-Guide/assets/reading.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body id="top">
+  <div class="reading-progress" data-progress aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>17 篇指南 · 更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link"  href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link"  href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link"  href="/Codex-Guide/start/install-config.html">安装与基础配置</a><a class="nav-link"  href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link"  href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link"  href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link"  href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a><a class="nav-link"  href="/Codex-Guide/practices/end-to-end.html">端到端开发案例</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link"  href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link"  href="/Codex-Guide/workflows/configuration.html">配置、模式与 Profiles</a><a class="nav-link"  href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link"  href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link"  href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link"  href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link active" aria-current="page" href="/Codex-Guide/reference/troubleshooting.html">故障排查手册</a><a class="nav-link"  href="/Codex-Guide/reference/glossary.html">术语速查</a><a class="nav-link"  href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content">
+    <div class="page-meta"><span>安全与参考</span><i></i><span>约 4 分钟</span><i></i><span>核查于 2026-07-13</span></div>
+    <article class="article"><h1>故障排查手册</h1>
+<p>排障的第一原则：保留完整报错，缩小变量，一次只改变一件事。不要只说“Codex 不工作”，要提供版本、目录、执行命令、预期、实际结果和最小复现。</p>
+<h2 id="先收集现场">先收集现场<a class="heading-anchor" href="#先收集现场" aria-label="复制此章节链接">#</a></h2>
+<pre><code class="language-bash">codex --version
+pwd
+git status --short
+git rev-parse --show-toplevel
+</code></pre>
+<p>同时记录：</p>
+<ul>
+<li>操作系统与终端；</li>
+<li>Codex 的启动方式；</li>
+<li>是否使用自定义 <code>config.toml</code>；</li>
+<li>当前仓库是否有 <code>AGENTS.md</code>；</li>
+<li>报错发生在读取、修改、执行命令还是联网阶段。</li>
+</ul>
+<h2 id="登录或账户不可用">登录或账户不可用<a class="heading-anchor" href="#登录或账户不可用" aria-label="复制此章节链接">#</a></h2>
+<ol>
+<li>确认网络和系统时间正常；</li>
+<li>退出后重新完成官方登录流程；</li>
+<li>确认组织管理员没有限制相关产品或模型；</li>
+<li>不要在 issue 或截图中暴露令牌；</li>
+<li>若只在某个网络环境失败，记录代理、VPN 和 DNS 差异。</li>
+</ol>
+<p>账户能力可能因套餐和组织策略不同；以官方产品提示为准。</p>
+<h2 id="配置解析失败">配置解析失败<a class="heading-anchor" href="#配置解析失败" aria-label="复制此章节链接">#</a></h2>
+<p>典型信号是启动即报未知字段、TOML 语法或无效值。</p>
+<ol>
+<li>备份 <code>~/.codex/config.toml</code>；</li>
+<li>临时改为最小文件或移走；</li>
+<li>重启确认默认配置能否启动；</li>
+<li>对照当前版本的<a href="https://learn.chatgpt.com/docs/config-file/config-reference">配置参考</a>逐项恢复；</li>
+<li>注意引号、表名和布尔值格式。</li>
+</ol>
+<p>不要凭旧博客中的字段猜测当前配置。</p>
+<h2 id="无法修改文件">无法修改文件<a class="heading-anchor" href="#无法修改文件" aria-label="复制此章节链接">#</a></h2>
+<p>先区分原因：</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>常见原因</th>
+<th>检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>所有文件都不能写</td>
+<td>只读模式</td>
+<td>当前 sandbox / mode</td>
+</tr>
+<tr>
+<td>只有某路径不能写</td>
+<td>路径在工作区外</td>
+<td><code>pwd</code>、仓库根目录</td>
+</tr>
+<tr>
+<td>需要反复确认</td>
+<td>审批策略较严格</td>
+<td>approval policy</td>
+</tr>
+<tr>
+<td>写入后又消失</td>
+<td>任务被中断或工具回滚</td>
+<td>会话日志、Git 状态</td>
+</tr>
+<tr>
+<td>文件本身拒绝写入</td>
+<td>系统权限或锁定</td>
+<td><code>ls -l</code>、编辑器锁</td>
+</tr>
+</tbody></table>
+<p>不要直接切到无限制权限。先把工作目录和必要写入范围设对。</p>
+<h2 id="命令执行失败">命令执行失败<a class="heading-anchor" href="#命令执行失败" aria-label="复制此章节链接">#</a></h2>
+<p>让 Codex展示完整命令、工作目录、退出码和输出。常见排查顺序：</p>
+<ol>
+<li>人工在同一目录运行同一命令；</li>
+<li>确认依赖已经安装；</li>
+<li>检查 shell、环境变量与 PATH；</li>
+<li>确认命令是否需要网络或工作区外写入；</li>
+<li>缩小为单个测试或单个脚本。</li>
+</ol>
+<p>如果人工运行也失败，问题通常在项目环境，不在代理。</p>
+<h2 id="git-看起来不对">Git 看起来不对<a class="heading-anchor" href="#git-看起来不对" aria-label="复制此章节链接">#</a></h2>
+<p>先运行：</p>
+<pre><code class="language-bash">git status --short --branch
+git diff --stat
+git diff --check
+git remote -v
+</code></pre>
+<p>常见情况：</p>
+<ul>
+<li>在错误目录或嵌套仓库中执行；</li>
+<li>工作区原本就有用户改动；</li>
+<li>分支没有跟踪远端；</li>
+<li>远端需要重新授权；</li>
+<li>工作流文件修改需要额外 OAuth scope；</li>
+<li>大小写文件名在不同系统表现不一致。</li>
+</ul>
+<p>任何修复前先保护用户现有改动，避免使用破坏性 reset。</p>
+<h2 id="网络或-mcp-连接失败">网络或 MCP 连接失败<a class="heading-anchor" href="#网络或-mcp-连接失败" aria-label="复制此章节链接">#</a></h2>
+<p>检查是否真的需要网络、当前模式是否允许访问、服务地址是否正确、认证是否过期。MCP 问题还要确认：</p>
+<ul>
+<li>服务器能独立启动；</li>
+<li>配置的命令和参数正确；</li>
+<li>必要环境变量存在；</li>
+<li>客户端看得到服务器暴露的工具；</li>
+<li>超时不是由交互式登录造成。</li>
+</ul>
+<p>最小化配置，只连接一个服务器验证，再逐个恢复。</p>
+<h2 id="输出质量差-但没有报错">输出质量差，但没有报错<a class="heading-anchor" href="#输出质量差-但没有报错" aria-label="复制此章节链接">#</a></h2>
+<p>这通常不是“模型坏了”，而是任务信息不足：</p>
+<ul>
+<li>目标是否具体？</li>
+<li>范围和禁区是否明确？</li>
+<li>是否给了验证标准？</li>
+<li>Codex 是否先读了关键文件？</li>
+<li>任务是否大到需要拆分？</li>
+<li><code>AGENTS.md</code> 是否包含冲突或过期规则？</li>
+</ul>
+<p>把失败样例加入提示，并要求先复述理解或先只读分析。</p>
+<h2 id="何时提交问题">何时提交问题<a class="heading-anchor" href="#何时提交问题" aria-label="复制此章节链接">#</a></h2>
+<p>当最小复现仍失败时，附上：</p>
+<ul>
+<li>Codex 版本与系统；</li>
+<li>脱敏后的配置；</li>
+<li>最短复现步骤；</li>
+<li>完整错误文本；</li>
+<li>预期与实际结果；</li>
+<li>是否在默认配置下复现。</li>
+</ul>
+<p>先查<a href="https://learn.chatgpt.com/docs/reference/troubleshooting">官方 Troubleshooting</a>和官方仓库已有问题，避免重复提交。</p>
+</article>
+    <nav class="page-nav" aria-label="文章导航">
+    <a class="previous" href="/Codex-Guide/reference/prompts.html"><small>← 上一篇</small><strong>提示词配方库</strong></a>
+    <a class="next" href="/Codex-Guide/reference/glossary.html"><small>下一篇 →</small><strong>术语速查</strong></a>
+  </nav>
+    <footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方指南</span></footer>
+  </main>
+  <aside class="toc" aria-label="页内目录"><p>ON THIS PAGE</p><nav><a class="toc-level-2" href="#先收集现场">先收集现场</a><a class="toc-level-2" href="#登录或账户不可用">登录或账户不可用</a><a class="toc-level-2" href="#配置解析失败">配置解析失败</a><a class="toc-level-2" href="#无法修改文件">无法修改文件</a><a class="toc-level-2" href="#命令执行失败">命令执行失败</a><a class="toc-level-2" href="#git-看起来不对">Git 看起来不对</a><a class="toc-level-2" href="#网络或-mcp-连接失败">网络或 MCP 连接失败</a><a class="toc-level-2" href="#输出质量差-但没有报错">输出质量差，但没有报错</a><a class="toc-level-2" href="#何时提交问题">何时提交问题</a></nav><a class="toc-top" href="#top">返回顶部 ↑</a></aside></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，快速定位实践"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>

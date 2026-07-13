@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>端到端开发案例 · Codex 实践指南</title>
+  <meta name="description" content="用一个真实功能演示 Codex 从理解、计划、修改到验证和交付的完整闭环。"><meta name="theme-color" content="#0b100d">
+  <meta property="og:title" content="端到端开发案例 · Codex 实践指南"><meta property="og:description" content="用一个真实功能演示 Codex 从理解、计划、修改到验证和交付的完整闭环。"><meta property="og:type" content="article">
+  <link rel="canonical" href="https://opcspace.github.io/Codex-Guide/practices/end-to-end.html">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css"><link rel="stylesheet" href="/Codex-Guide/assets/reading.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body id="top">
+  <div class="reading-progress" data-progress aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>17 篇指南 · 更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link"  href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link"  href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link"  href="/Codex-Guide/start/install-config.html">安装与基础配置</a><a class="nav-link"  href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link"  href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link"  href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link"  href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a><a class="nav-link active" aria-current="page" href="/Codex-Guide/practices/end-to-end.html">端到端开发案例</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link"  href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link"  href="/Codex-Guide/workflows/configuration.html">配置、模式与 Profiles</a><a class="nav-link"  href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link"  href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link"  href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link"  href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link"  href="/Codex-Guide/reference/troubleshooting.html">故障排查手册</a><a class="nav-link"  href="/Codex-Guide/reference/glossary.html">术语速查</a><a class="nav-link"  href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content">
+    <div class="page-meta"><span>核心实践</span><i></i><span>约 4 分钟</span><i></i><span>核查于 2026-07-13</span></div>
+    <article class="article"><h1>端到端开发案例</h1>
+<p>以下案例不是特定框架教程，而是一套可迁移到多数仓库的协作节奏。任务：给已有 Web 项目增加“导出 CSV”功能，同时保持现有 API 不变。</p>
+<h2 id="第-0-步-建立基线">第 0 步：建立基线<a class="heading-anchor" href="#第-0-步-建立基线" aria-label="复制此章节链接">#</a></h2>
+<p>先由人确认仓库当前是健康的：</p>
+<pre><code class="language-bash">git status --short
+npm test
+npm run lint
+</code></pre>
+<p>如果基线已经失败，要把失败写进任务背景。否则 Codex 无法判断错误是新引入的还是原本就存在。</p>
+<h2 id="第-1-步-只读侦察">第 1 步：只读侦察<a class="heading-anchor" href="#第-1-步-只读侦察" aria-label="复制此章节链接">#</a></h2>
+<p>先不授权修改：</p>
+<pre><code class="language-text">请只读分析这个仓库，定位列表数据的获取、展示和测试位置。
+不要改文件。输出：
+- 相关文件及各自职责；
+- 最小实现路径；
+- 可能破坏现有行为的风险；
+- 建议的验证命令。
+</code></pre>
+<p>评审它的理解：是否找到了数据边界、是否注意编码和大数据量、是否识别已有工具函数。若方向不对，此时纠正成本最低。</p>
+<h2 id="第-2-步-锁定任务边界">第 2 步：锁定任务边界<a class="heading-anchor" href="#第-2-步-锁定任务边界" aria-label="复制此章节链接">#</a></h2>
+<pre><code class="language-text">实现列表页“导出 CSV”功能。
+
+范围：
+- 只导出当前筛选结果；
+- 字段顺序为 name、email、created_at；
+- UTF-8 with BOM，确保 Excel 打开中文正常；
+- 保持现有查询 API 不变。
+
+验证：
+- 为转义逗号、引号、换行和中文补单元测试；
+- 运行相关测试与 lint；
+- 不修改无关格式。
+
+交付：
+- 总结改动；
+- 列出验证命令和结果；
+- 说明仍存在的边界情况。
+</code></pre>
+<p>这份任务单同时提供目标、约束、失败边界和验收方式。比“帮我加个导出”更容易一次得到可审查结果。</p>
+<h2 id="第-3-步-小步实现">第 3 步：小步实现<a class="heading-anchor" href="#第-3-步-小步实现" aria-label="复制此章节链接">#</a></h2>
+<p>要求 Codex先改纯函数与测试，再接 UI。拆分顺序：</p>
+<ol>
+<li>CSV 序列化函数；</li>
+<li>边界测试；</li>
+<li>下载触发逻辑；</li>
+<li>按钮和状态；</li>
+<li>回归检查。</li>
+</ol>
+<p>每一步都应保持差异小且目的单一。若代理开始大范围重命名，及时要求停止并解释必要性。</p>
+<h2 id="第-4-步-看差异-不只看总结">第 4 步：看差异，不只看总结<a class="heading-anchor" href="#第-4-步-看差异-不只看总结" aria-label="复制此章节链接">#</a></h2>
+<p>至少检查：</p>
+<pre><code class="language-bash">git diff --stat
+git diff --check
+git diff
+</code></pre>
+<p>重点问五件事：</p>
+<ul>
+<li>输入为空时会怎样？</li>
+<li>字段中有双引号、换行时是否正确转义？</li>
+<li>导出是否复用了当前筛选条件？</li>
+<li>浏览器对象 URL 是否被释放？</li>
+<li>是否改动了任务范围之外的接口？</li>
+</ul>
+<p>总结是导航，差异才是证据。</p>
+<h2 id="第-5-步-分层验证">第 5 步：分层验证<a class="heading-anchor" href="#第-5-步-分层验证" aria-label="复制此章节链接">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>验证</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>静态</td>
+<td>格式、类型、lint</td>
+</tr>
+<tr>
+<td>单元</td>
+<td>CSV 转义、字段顺序、空值</td>
+</tr>
+<tr>
+<td>集成</td>
+<td>当前筛选结果进入导出函数</td>
+</tr>
+<tr>
+<td>人工</td>
+<td>下载文件名、Excel 中文、按钮反馈</td>
+</tr>
+<tr>
+<td>回归</td>
+<td>现有列表查询和分页不变</td>
+</tr>
+</tbody></table>
+<p>如果某项无法运行，交付说明必须写清“未运行”及原因，不能用“应该没问题”代替。</p>
+<h2 id="第-6-步-形成可合并交付">第 6 步：形成可合并交付<a class="heading-anchor" href="#第-6-步-形成可合并交付" aria-label="复制此章节链接">#</a></h2>
+<p>理想收尾包含：</p>
+<pre><code class="language-text">完成：
+- 新增 src/utils/csv.ts，集中处理序列化与 BOM；
+- 列表工具栏增加导出入口；
+- 新增 8 个边界测试。
+
+验证：
+- npm test -- csv：通过；
+- npm run lint：通过；
+- 人工下载：已检查中文与引号字段。
+
+未做：
+- 未增加服务端批量导出；当前功能只覆盖已加载筛选结果。
+</code></pre>
+<h2 id="失败模式与纠偏">失败模式与纠偏<a class="heading-anchor" href="#失败模式与纠偏" aria-label="复制此章节链接">#</a></h2>
+<h3 id="一次交给它整个-大功能">一次交给它整个“大功能”<a class="heading-anchor" href="#一次交给它整个-大功能" aria-label="复制此章节链接">#</a></h3>
+<p>结果通常是上下文过多、差异过大。纠偏：先侦察，再按可独立验证的切片执行。</p>
+<h3 id="测试只验证正常输入">测试只验证正常输入<a class="heading-anchor" href="#测试只验证正常输入" aria-label="复制此章节链接">#</a></h3>
+<p>纠偏：在任务中显式列出失败样例、边界字符和空状态。</p>
+<h3 id="代理顺手清理无关代码">代理顺手清理无关代码<a class="heading-anchor" href="#代理顺手清理无关代码" aria-label="复制此章节链接">#</a></h3>
+<p>纠偏：要求“不要修改无关格式”，并以 <code>git diff --stat</code> 监控扩散。</p>
+<h3 id="命令通过就直接合并">命令通过就直接合并<a class="heading-anchor" href="#命令通过就直接合并" aria-label="复制此章节链接">#</a></h3>
+<p>自动测试不能替代产品验收。对用户可见行为仍需一次人工检查。</p>
+<h2 id="可复用检查单">可复用检查单<a class="heading-anchor" href="#可复用检查单" aria-label="复制此章节链接">#</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"> 基线状态已记录</li>
+<li><input disabled="" type="checkbox"> 先完成只读侦察</li>
+<li><input disabled="" type="checkbox"> 范围与禁区明确</li>
+<li><input disabled="" type="checkbox"> 实现被拆成小步</li>
+<li><input disabled="" type="checkbox"> 人看过完整差异</li>
+<li><input disabled="" type="checkbox"> 关键边界有测试</li>
+<li><input disabled="" type="checkbox"> 未验证项被明确披露</li>
+</ul>
+</article>
+    <nav class="page-nav" aria-label="文章导航">
+    <a class="previous" href="/Codex-Guide/practices/review-test.html"><small>← 上一篇</small><strong>审查、测试与交付</strong></a>
+    <a class="next" href="/Codex-Guide/workflows/parallel-work.html"><small>下一篇 →</small><strong>并行任务与 Worktree</strong></a>
+  </nav>
+    <footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方指南</span></footer>
+  </main>
+  <aside class="toc" aria-label="页内目录"><p>ON THIS PAGE</p><nav><a class="toc-level-2" href="#第-0-步-建立基线">第 0 步：建立基线</a><a class="toc-level-2" href="#第-1-步-只读侦察">第 1 步：只读侦察</a><a class="toc-level-2" href="#第-2-步-锁定任务边界">第 2 步：锁定任务边界</a><a class="toc-level-2" href="#第-3-步-小步实现">第 3 步：小步实现</a><a class="toc-level-2" href="#第-4-步-看差异-不只看总结">第 4 步：看差异，不只看总结</a><a class="toc-level-2" href="#第-5-步-分层验证">第 5 步：分层验证</a><a class="toc-level-2" href="#第-6-步-形成可合并交付">第 6 步：形成可合并交付</a><a class="toc-level-2" href="#失败模式与纠偏">失败模式与纠偏</a><a class="toc-level-3" href="#一次交给它整个-大功能">一次交给它整个“大功能”</a><a class="toc-level-3" href="#测试只验证正常输入">测试只验证正常输入</a><a class="toc-level-3" href="#代理顺手清理无关代码">代理顺手清理无关代码</a><a class="toc-level-3" href="#命令通过就直接合并">命令通过就直接合并</a><a class="toc-level-2" href="#可复用检查单">可复用检查单</a></nav><a class="toc-top" href="#top">返回顶部 ↑</a></aside></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，快速定位实践"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>

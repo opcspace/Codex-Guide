@@ -4,18 +4,23 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>官方资料索引 · Codex 实践指南</title>
   <meta name="description" content="本知识库使用的 OpenAI 官方 Codex 文档、课程与开源资料。"><meta name="theme-color" content="#0b100d">
-  <link rel="stylesheet" href="/Codex-Guide/assets/site.css">
+  <meta property="og:title" content="官方资料索引 · Codex 实践指南"><meta property="og:description" content="本知识库使用的 OpenAI 官方 Codex 文档、课程与开源资料。"><meta property="og:type" content="article">
+  <link rel="canonical" href="https://opcspace.github.io/Codex-Guide/reference/sources.html">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css"><link rel="stylesheet" href="/Codex-Guide/assets/reading.css">
   <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
   <script defer src="/Codex-Guide/assets/site.js"></script>
 </head>
-<body>
+<body id="top">
+  <div class="reading-progress" data-progress aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
   <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
-  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link" href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link" href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link" href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link" href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link" href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link" href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link" href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link" href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link" href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link" href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link" href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link active" href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
-  <main class="content"><article class="article"><h1>官方资料索引</h1>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>17 篇指南 · 更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link"  href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link"  href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link"  href="/Codex-Guide/start/install-config.html">安装与基础配置</a><a class="nav-link"  href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link"  href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link"  href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link"  href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a><a class="nav-link"  href="/Codex-Guide/practices/end-to-end.html">端到端开发案例</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link"  href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link"  href="/Codex-Guide/workflows/configuration.html">配置、模式与 Profiles</a><a class="nav-link"  href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link"  href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link"  href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link"  href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link"  href="/Codex-Guide/reference/troubleshooting.html">故障排查手册</a><a class="nav-link"  href="/Codex-Guide/reference/glossary.html">术语速查</a><a class="nav-link active" aria-current="page" href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content">
+    <div class="page-meta"><span>安全与参考</span><i></i><span>约 2 分钟</span><i></i><span>核查于 2026-07-13</span></div>
+    <article class="article"><h1>官方资料索引</h1>
 <p>本库只把 OpenAI 官方站点、OpenAI Academy 和 <code>openai/codex</code> 官方仓库作为事实来源。内容为中文整理与实践转译，不是官方文档镜像。</p>
 <p><strong>最后核查：2026-07-13（Asia/Shanghai）</strong></p>
-<h2>产品与入门</h2>
+<h2 id="产品与入门">产品与入门<a class="heading-anchor" href="#产品与入门" aria-label="复制此章节链接">#</a></h2>
 <ul>
 <li><a href="https://openai.com/codex/get-started/">Get started with Codex</a></li>
 <li><a href="https://openai.com/academy/what-is-codex/">What is ChatGPT Codex?</a></li>
@@ -25,8 +30,10 @@
 <li><a href="https://learn.chatgpt.com/docs/codex/ide">Codex IDE extension</a></li>
 <li><a href="https://learn.chatgpt.com/docs/cloud">Codex cloud</a></li>
 <li><a href="https://learn.chatgpt.com/docs/app">ChatGPT desktop app</a></li>
+<li><a href="https://learn.chatgpt.com/docs/reference/commands">Commands reference</a></li>
+<li><a href="https://learn.chatgpt.com/docs/reference/settings">Settings</a></li>
 </ul>
-<h2>工程实践</h2>
+<h2 id="工程实践">工程实践<a class="heading-anchor" href="#工程实践" aria-label="复制此章节链接">#</a></h2>
 <ul>
 <li><a href="https://learn.chatgpt.com/guides/best-practices">Best practices</a></li>
 <li><a href="https://openai.com/business/guides-and-resources/how-openai-uses-codex/">How OpenAI uses Codex</a></li>
@@ -35,8 +42,17 @@
 <li><a href="https://learn.chatgpt.com/docs/third-party/github">Codex code review in GitHub</a></li>
 <li><a href="https://learn.chatgpt.com/docs/environments/git-worktrees">Worktrees</a></li>
 <li><a href="https://learn.chatgpt.com/docs/environments/local-environment">Local environments</a></li>
+<li><a href="https://learn.chatgpt.com/docs/environments/modes">Modes</a></li>
+<li><a href="https://learn.chatgpt.com/docs/cli-customization">CLI customization</a></li>
 </ul>
-<h2>扩展与自动化</h2>
+<h2 id="配置与排障">配置与排障<a class="heading-anchor" href="#配置与排障" aria-label="复制此章节链接">#</a></h2>
+<ul>
+<li><a href="https://learn.chatgpt.com/docs/config-file/config-basic">Configuration basics</a></li>
+<li><a href="https://learn.chatgpt.com/docs/config-file/config-advanced">Advanced configuration</a></li>
+<li><a href="https://learn.chatgpt.com/docs/config-file/config-reference">Configuration reference</a></li>
+<li><a href="https://learn.chatgpt.com/docs/reference/troubleshooting">Troubleshooting</a></li>
+</ul>
+<h2 id="扩展与自动化">扩展与自动化<a class="heading-anchor" href="#扩展与自动化" aria-label="复制此章节链接">#</a></h2>
 <ul>
 <li><a href="https://openai.com/academy/codex-automations/">Automations</a></li>
 <li><a href="https://learn.chatgpt.com/docs/non-interactive-mode">Non-interactive mode</a></li>
@@ -45,25 +61,32 @@
 <li><a href="https://learn.chatgpt.com/docs/extend/mcp">Model Context Protocol</a></li>
 <li><a href="https://academy.openai.com/public/clubs/builders-etkn1/resources/codex-103-advanced-workflows-and-automation-2026-03-18">Codex 103: Advanced Workflows and Automation</a></li>
 </ul>
-<h2>安全</h2>
+<h2 id="安全">安全<a class="heading-anchor" href="#安全" aria-label="复制此章节链接">#</a></h2>
 <ul>
 <li><a href="https://learn.chatgpt.com/docs/sandboxing">Sandbox</a></li>
 <li><a href="https://learn.chatgpt.com/docs/agent-approvals-security">Agent approvals &amp; security</a></li>
 <li><a href="https://learn.chatgpt.com/docs/cloud/internet-access">Agent internet access</a></li>
 <li><a href="https://openai.com/index/running-codex-safely/">Running Codex safely at OpenAI</a></li>
 </ul>
-<h2>开源实现</h2>
+<h2 id="开源实现">开源实现<a class="heading-anchor" href="#开源实现" aria-label="复制此章节链接">#</a></h2>
 <ul>
 <li><a href="https://github.com/openai/codex">openai/codex</a></li>
 <li><a href="https://github.com/openai/codex/blob/main/AGENTS.md">openai/codex AGENTS.md</a></li>
 </ul>
-<h2>收录原则</h2>
+<h2 id="收录原则">收录原则<a class="heading-anchor" href="#收录原则" aria-label="复制此章节链接">#</a></h2>
 <ol>
 <li>官方文档优先于帮助中心旧文章和第三方教程。</li>
 <li>涉及命令、权限、产品入口时，以核查日的官方页面为准。</li>
 <li>实践建议会与事实分开表述；推导内容不冒充官方原话。</li>
 <li>不大段复制官方内容，只做摘要、重组和可执行化。</li>
 </ol>
-</article><footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方镜像</span></footer></main></div>
-  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，例如 AGENTS.md、自动化、权限"></label><div class="search-results" data-search-results></div></dialog>
+</article>
+    <nav class="page-nav" aria-label="文章导航">
+    <a class="previous" href="/Codex-Guide/reference/glossary.html"><small>← 上一篇</small><strong>术语速查</strong></a>
+    <span></span>
+  </nav>
+    <footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方指南</span></footer>
+  </main>
+  <aside class="toc" aria-label="页内目录"><p>ON THIS PAGE</p><nav><a class="toc-level-2" href="#产品与入门">产品与入门</a><a class="toc-level-2" href="#工程实践">工程实践</a><a class="toc-level-2" href="#配置与排障">配置与排障</a><a class="toc-level-2" href="#扩展与自动化">扩展与自动化</a><a class="toc-level-2" href="#安全">安全</a><a class="toc-level-2" href="#开源实现">开源实现</a><a class="toc-level-2" href="#收录原则">收录原则</a></nav><a class="toc-top" href="#top">返回顶部 ↑</a></aside></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，快速定位实践"></label><div class="search-results" data-search-results></div></dialog>
 </body></html>

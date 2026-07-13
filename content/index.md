@@ -7,13 +7,15 @@ description: 从第一次委派到可靠自动化的 Codex 中文实践知识库
 
 # 把 Codex 用成真正的工作系统
 
-这不是功能清单，而是一条从“会提问”到“能稳定交付”的实践路线。内容只取自 OpenAI 官方文档、Academy、官方 GitHub，并转译成可直接执行的中文方法。
+这不是功能清单，而是一条从“会提问”到“能稳定交付”的实践路线。17 篇内容只取自 OpenAI 官方文档、Academy、官方 GitHub，并转译成可直接执行的中文方法。
 
 <div class="home-grid">
   <a href="start/first-task.html"><small>01 / START</small><strong>先完成一个闭环</strong><span>选目录、给上下文、验收结果、留下下一步。</span></a>
   <a href="practices/prompting.html"><small>02 / DELEGATE</small><strong>把需求写成任务单</strong><span>目标、范围、约束、验证、交付物五件套。</span></a>
   <a href="practices/repo-context.html"><small>03 / CONTEXT</small><strong>让规则进入仓库</strong><span>用 AGENTS.md 让每次任务从一致的工程上下文开始。</span></a>
   <a href="workflows/automation.html"><small>04 / SCALE</small><strong>把成功流程自动化</strong><span>从人工验证到 codex exec、GitHub Action 和定时任务。</span></a>
+  <a href="practices/end-to-end.html"><small>05 / CASE</small><strong>看完整开发闭环</strong><span>从基线、侦察、实现到验证与交付。</span></a>
+  <a href="reference/troubleshooting.html"><small>06 / RECOVER</small><strong>系统化定位故障</strong><span>登录、配置、权限、网络与 Git 的排查路径。</span></a>
 </div>
 
 ## 推荐学习路线

@@ -36,3 +36,32 @@ for (const pre of document.querySelectorAll('pre')) {
   button.addEventListener('click', async () => { await navigator.clipboard.writeText(pre.innerText); button.textContent='COPIED'; setTimeout(()=>button.textContent='COPY',1200); });
   pre.append(button);
 }
+
+const progress = document.querySelector('[data-progress]');
+function updateProgress() {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = total > 0 ? `${Math.min(100, (window.scrollY / total) * 100)}%` : '0';
+}
+addEventListener('scroll', updateProgress, { passive: true });
+addEventListener('resize', updateProgress);
+updateProgress();
+
+const tocLinks = [...document.querySelectorAll('.toc nav a')];
+const headings = tocLinks.map(link => document.querySelector(link.hash)).filter(Boolean);
+if (headings.length) {
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (!visible) return;
+    tocLinks.forEach(link => link.classList.toggle('current', link.hash === `#${visible.target.id}`));
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  headings.forEach(heading => observer.observe(heading));
+}
+
+for (const anchor of document.querySelectorAll('.heading-anchor')) {
+  anchor.addEventListener('click', async () => {
+    if (!navigator.clipboard) return;
+    await navigator.clipboard.writeText(anchor.href);
+    anchor.textContent = '✓';
+    setTimeout(() => { anchor.textContent = '#'; }, 1000);
+  });
+}

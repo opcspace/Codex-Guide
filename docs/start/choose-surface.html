@@ -4,17 +4,22 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>选择使用入口 · Codex 实践指南</title>
   <meta name="description" content="根据任务形态选择 Codex App、CLI、IDE 或 Cloud。"><meta name="theme-color" content="#0b100d">
-  <link rel="stylesheet" href="/Codex-Guide/assets/site.css">
+  <meta property="og:title" content="选择使用入口 · Codex 实践指南"><meta property="og:description" content="根据任务形态选择 Codex App、CLI、IDE 或 Cloud。"><meta property="og:type" content="article">
+  <link rel="canonical" href="https://opcspace.github.io/Codex-Guide/start/choose-surface.html">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css"><link rel="stylesheet" href="/Codex-Guide/assets/reading.css">
   <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
   <script defer src="/Codex-Guide/assets/site.js"></script>
 </head>
-<body>
+<body id="top">
+  <div class="reading-progress" data-progress aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
   <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
-  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link" href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link active" href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link" href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link" href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link" href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link" href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link" href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link" href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link" href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link" href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link" href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link" href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
-  <main class="content"><article class="article"><h1>先选对工作台</h1>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>17 篇指南 · 更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link"  href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link active" aria-current="page" href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link"  href="/Codex-Guide/start/install-config.html">安装与基础配置</a><a class="nav-link"  href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link"  href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link"  href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link"  href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a><a class="nav-link"  href="/Codex-Guide/practices/end-to-end.html">端到端开发案例</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link"  href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link"  href="/Codex-Guide/workflows/configuration.html">配置、模式与 Profiles</a><a class="nav-link"  href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link"  href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link"  href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link"  href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link"  href="/Codex-Guide/reference/troubleshooting.html">故障排查手册</a><a class="nav-link"  href="/Codex-Guide/reference/glossary.html">术语速查</a><a class="nav-link"  href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content">
+    <div class="page-meta"><span>开始</span><i></i><span>约 2 分钟</span><i></i><span>核查于 2026-07-13</span></div>
+    <article class="article"><h1>先选对工作台</h1>
 <p>Codex 不只有一个入口。官方将 App、CLI、IDE 扩展和 Cloud 设计成不同的工作表面；选择标准不是“哪个更强”，而是上下文在哪里、任务要运行多久、你需要怎样审查。</p>
-<h2>四种入口怎么选</h2>
+<h2 id="四种入口怎么选">四种入口怎么选<a class="heading-anchor" href="#四种入口怎么选" aria-label="复制此章节链接">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -49,25 +54,32 @@
 <td>多 Issue 并行、后台代码任务</td>
 </tr>
 </tbody></table>
-<h2>一个实用决策法</h2>
+<h2 id="一个实用决策法">一个实用决策法<a class="heading-anchor" href="#一个实用决策法" aria-label="复制此章节链接">#</a></h2>
 <ol>
 <li><strong>上下文主要在本地文件和多个工具里</strong>：用 App。</li>
 <li><strong>你已经在终端里工作</strong>：用 CLI，减少切换。</li>
 <li><strong>任务围绕当前选区或几个代码文件</strong>：用 IDE 扩展。</li>
 <li><strong>任务可独立运行、希望并行或离开电脑继续</strong>：用 Cloud。</li>
 </ol>
-<h2>不要把入口当成孤岛</h2>
+<h2 id="不要把入口当成孤岛">不要把入口当成孤岛<a class="heading-anchor" href="#不要把入口当成孤岛" aria-label="复制此章节链接">#</a></h2>
 <p>成熟工作流会在入口之间交接：在 App 中做调研和规划，在 Worktree 中隔离实现；在 IDE 中微调；在 GitHub 上触发最终审查。官方 App 也支持在 Local 与 Worktree 之间 handoff，不必把一个任务从头重做。</p>
 <blockquote>
 <p>入口选择的本质，是选择“任务运行环境 + 上下文来源 + 审查界面”。</p>
 </blockquote>
-<h2>官方依据</h2>
+<h2 id="官方依据">官方依据<a class="heading-anchor" href="#官方依据" aria-label="复制此章节链接">#</a></h2>
 <ul>
 <li><a href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a></li>
 <li><a href="https://learn.chatgpt.com/docs/codex/ide">Codex IDE extension</a></li>
 <li><a href="https://learn.chatgpt.com/docs/cloud">Codex cloud</a></li>
 <li><a href="https://learn.chatgpt.com/docs/app">ChatGPT desktop app</a></li>
 </ul>
-</article><footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方镜像</span></footer></main></div>
-  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，例如 AGENTS.md、自动化、权限"></label><div class="search-results" data-search-results></div></dialog>
+</article>
+    <nav class="page-nav" aria-label="文章导航">
+    <a class="previous" href="/Codex-Guide/index.html"><small>← 上一篇</small><strong>知识库首页</strong></a>
+    <a class="next" href="/Codex-Guide/start/install-config.html"><small>下一篇 →</small><strong>安装与基础配置</strong></a>
+  </nav>
+    <footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方指南</span></footer>
+  </main>
+  <aside class="toc" aria-label="页内目录"><p>ON THIS PAGE</p><nav><a class="toc-level-2" href="#四种入口怎么选">四种入口怎么选</a><a class="toc-level-2" href="#一个实用决策法">一个实用决策法</a><a class="toc-level-2" href="#不要把入口当成孤岛">不要把入口当成孤岛</a><a class="toc-level-2" href="#官方依据">官方依据</a></nav><a class="toc-top" href="#top">返回顶部 ↑</a></aside></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，快速定位实践"></label><div class="search-results" data-search-results></div></dialog>
 </body></html>
