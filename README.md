@@ -13,7 +13,7 @@ npx serve docs
 
 ## 发布
 
-站点构建产物保存在 `docs/`。仓库 Settings → Pages → Source 选择 **Deploy from a branch**，分支使用 `main`，目录使用 `/docs`。
+站点构建产物保存在 `docs/`。推送到 `main` 后，GitHub Actions 会重新构建并部署 GitHub Pages；仓库 Settings → Pages → Source 使用 **GitHub Actions**。
 
 预期地址：<https://opcspace.github.io/Codex-Guide/>
 
