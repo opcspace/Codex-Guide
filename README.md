@@ -15,7 +15,7 @@ npx serve site
 
 推送到 `main` 后，GitHub Actions 会构建并发布 GitHub Pages。仓库 Settings → Pages → Source 需要选择 **GitHub Actions**。
 
-预期地址：<https://opcspace.github.io/codex-guide/>
+预期地址：<https://opcspace.github.io/Codex-Guide/>
 
 ## 内容原则
 

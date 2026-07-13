@@ -3,12 +3,12 @@
   "shortTitle": "CODEX / FIELD NOTES",
   "tagline": "从第一次委派，到可复用的工程工作流",
   "description": "OPCspace 整理的 Codex 中文实践知识库。内容基于 OpenAI 官方文档、Academy 与官方开源仓库。",
-  "repo": "https://github.com/opcspace/codex-guide",
+  "repo": "https://github.com/opcspace/Codex-Guide",
   "accent": "#9fe870",
   "accentRgb": "159, 232, 112",
   "ink": "#ecf5e8",
   "canvas": "#0b100d",
-  "basePath": "/codex-guide/",
+  "basePath": "/Codex-Guide/",
   "footer": "OPCspace · Codex Field Notes",
   "updated": "2026-07-13"
 }
