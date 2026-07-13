@@ -1,0 +1,22 @@
+[
+  {"label":"开始","items":[
+    {"title":"知识库首页","file":"index.md","path":"index.html"},
+    {"title":"选择使用入口","file":"start/choose-surface.md","path":"start/choose-surface.html"},
+    {"title":"完成第一个任务","file":"start/first-task.md","path":"start/first-task.html"}
+  ]},
+  {"label":"核心实践","items":[
+    {"title":"写出可执行的任务","file":"practices/prompting.md","path":"practices/prompting.html"},
+    {"title":"用 AGENTS.md 固化上下文","file":"practices/repo-context.md","path":"practices/repo-context.html"},
+    {"title":"审查、测试与交付","file":"practices/review-test.md","path":"practices/review-test.html"}
+  ]},
+  {"label":"进阶工作流","items":[
+    {"title":"并行任务与 Worktree","file":"workflows/parallel-work.md","path":"workflows/parallel-work.html"},
+    {"title":"自动化与 CI","file":"workflows/automation.md","path":"workflows/automation.html"},
+    {"title":"Skills 与 MCP","file":"workflows/skills-mcp.md","path":"workflows/skills-mcp.html"}
+  ]},
+  {"label":"安全与参考","items":[
+    {"title":"权限、安全与网络","file":"safety/permissions.md","path":"safety/permissions.html"},
+    {"title":"提示词配方库","file":"reference/prompts.md","path":"reference/prompts.html"},
+    {"title":"官方资料索引","file":"reference/sources.md","path":"reference/sources.html"}
+  ]}
+]
