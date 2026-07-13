@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Skills 与 MCP · Codex 实践指南</title>
+  <meta name="description" content="用 Skill 固化流程，用 MCP 连接外部工具和上下文。"><meta name="theme-color" content="#0b100d">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link" href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link" href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link" href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link" href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link" href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link" href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link" href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link" href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link active" href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link" href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link" href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link" href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content"><article class="article"><h1>一个沉淀方法，一个连接世界</h1>
+<p>Skill 和 MCP 解决不同问题：Skill 把任务方法包装成可复用能力；MCP 把外部工具与数据接入 Codex。常见组合是“Skill 规定怎么做，MCP 提供做事所需的工具”。</p>
+<h2>什么时候做 Skill</h2>
+<p>当一个流程满足以下条件，就值得沉淀：</p>
+<ul>
+<li>经常重复；</li>
+<li>步骤和验收相对稳定；</li>
+<li>需要特定模板、脚本或参考资料；</li>
+<li>新人容易漏步骤。</li>
+</ul>
+<p>官方定义中，Skill 可包含说明、资源和可选脚本。好的 Skill 入口文件保持精炼，把大段参考资料按需加载，并提供清楚触发条件。</p>
+<h2>什么时候接 MCP</h2>
+<p>需要访问第三方文档、浏览器、Figma、Issue 系统或内部工具时使用 MCP。Codex 支持本地 STDIO 和远程 Streamable HTTP 服务器；远程服务可使用 Bearer Token 或 OAuth 等认证。</p>
+<h2>组合示例</h2>
+<p>“发布前检查” Skill 可以规定：读变更 → 跑测试 → 检查文档 → 生成发布摘要。它通过 MCP 读取设计稿和 Issue，通过本地命令执行测试，最后输出统一模板。</p>
+<h2>安全检查</h2>
+<ul>
+<li>只安装可信 Skill，先读说明和脚本；</li>
+<li>MCP 凭据放在安全存储，不写进仓库；</li>
+<li>给服务器最小权限；</li>
+<li>外部内容可能含提示注入，重要动作保留人工确认；</li>
+<li>定期移除不用的连接和权限。</li>
+</ul>
+<h2>官方依据</h2>
+<ul>
+<li><a href="https://learn.chatgpt.com/docs/build-skills">Build skills</a></li>
+<li><a href="https://learn.chatgpt.com/docs/extend/mcp">Model Context Protocol</a></li>
+</ul>
+</article><footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方镜像</span></footer></main></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，例如 AGENTS.md、自动化、权限"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>

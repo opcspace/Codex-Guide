@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Codex 实践指南 · Codex 实践指南</title>
+  <meta name="description" content="从第一次委派到可靠自动化的 Codex 中文实践知识库。"><meta name="theme-color" content="#0b100d">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link active" href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link" href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link" href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link" href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link" href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link" href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link" href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link" href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link" href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link" href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link" href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link" href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content"><article class="article"><p><span class="hero-kicker">OPCSPACE KNOWLEDGE BASE · 01</span></p>
+<h1>把 Codex 用成真正的工作系统</h1>
+<p>这不是功能清单，而是一条从“会提问”到“能稳定交付”的实践路线。内容只取自 OpenAI 官方文档、Academy、官方 GitHub，并转译成可直接执行的中文方法。</p>
+<div class="home-grid">
+  <a href="start/first-task.html"><small>01 / START</small><strong>先完成一个闭环</strong><span>选目录、给上下文、验收结果、留下下一步。</span></a>
+  <a href="practices/prompting.html"><small>02 / DELEGATE</small><strong>把需求写成任务单</strong><span>目标、范围、约束、验证、交付物五件套。</span></a>
+  <a href="practices/repo-context.html"><small>03 / CONTEXT</small><strong>让规则进入仓库</strong><span>用 AGENTS.md 让每次任务从一致的工程上下文开始。</span></a>
+  <a href="workflows/automation.html"><small>04 / SCALE</small><strong>把成功流程自动化</strong><span>从人工验证到 codex exec、GitHub Action 和定时任务。</span></a>
+</div>
+
+<h2>推荐学习路线</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>你要掌握的动作</th>
+<th>完成标志</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一次使用</td>
+<td>选择合适入口，完成一个小任务</td>
+<td>你能说清 Codex 改了什么、如何验证</td>
+</tr>
+<tr>
+<td>稳定协作</td>
+<td>写好任务单，使用差异审查和测试</td>
+<td>结果可复现，不依赖“碰运气”</td>
+</tr>
+<tr>
+<td>团队复用</td>
+<td>把约定写入 <code>AGENTS.md</code></td>
+<td>新任务自动继承仓库规则</td>
+</tr>
+<tr>
+<td>扩展能力</td>
+<td>引入 Skill、MCP 和连接器</td>
+<td>重复工作变成固定工作流</td>
+</tr>
+<tr>
+<td>自动运行</td>
+<td>使用 Worktree、<code>codex exec</code>、Actions</td>
+<td>多任务互不干扰，结果可审计</td>
+</tr>
+</tbody></table>
+<div class="callout"><strong>使用原则：</strong>让 Codex 先理解、再计划、后修改；让每个任务都带验证标准；把高风险动作留给人确认。</div>
+
+<h2>这套知识库如何维护</h2>
+<p>每篇内容都标出官方依据，资料索引记录了核查日期。官方界面和功能会变化，因此操作入口以官方文档为准；本库重点沉淀不易过时的方法：任务边界、上下文工程、验证闭环和安全控制。</p>
+<p>继续阅读：<a href="start/choose-surface.html">选择使用入口</a> · <a href="reference/sources.html">官方资料索引</a></p>
+</article><footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方镜像</span></footer></main></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，例如 AGENTS.md、自动化、权限"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>

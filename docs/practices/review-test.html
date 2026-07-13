@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>审查、测试与交付 · Codex 实践指南</title>
+  <meta name="description" content="用差异、测试和证据把 Codex 产出变成可靠交付。"><meta name="theme-color" content="#0b100d">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link" href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link" href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link" href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link" href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link" href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link active" href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link" href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link" href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link" href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link" href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link" href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link" href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content"><article class="article"><h1>代码生成结束，不等于任务完成</h1>
+<p>Codex 的价值来自执行，但最终判断仍属于人。可靠交付至少经过三层：范围审查、行为验证、结果说明。</p>
+<h2>第一层：看差异</h2>
+<p>优先检查：</p>
+<ul>
+<li>是否出现任务外文件；</li>
+<li>是否删掉错误处理或安全检查；</li>
+<li>是否引入新依赖、配置或迁移；</li>
+<li>是否通过大面积格式化掩盖真实改动；</li>
+<li>测试是不是验证行为，而非复制实现。</li>
+</ul>
+<p>App 的 review pane 支持逐文件查看、暂存、撤销、提交和推送。也可以输入 <code>/review</code>，选择相对基础分支或未提交变更做只读审查。</p>
+<h2>第二层：跑最相关的验证</h2>
+<p>按风险递增：</p>
+<ol>
+<li>直接相关的单元或集成测试；</li>
+<li>类型检查与 lint；</li>
+<li>受影响包或模块测试；</li>
+<li>UI 实际操作、截图或浏览器自动化；</li>
+<li>高风险改动的完整套件。</li>
+</ol>
+<p>让 Codex报告确切命令和结果，不要只给“测试通过”。如果仓库原本就有失败，必须分开记录。</p>
+<h2>第三层：形成交付摘要</h2>
+<pre><code class="language-text">请用以下结构收尾：
+- Outcome：用户可观察到的结果
+- Changed：修改文件和关键决策
+- Verified：运行命令及结果
+- Risks：未覆盖、假设或回滚方式
+</code></pre>
+<h2>GitHub 上再做一遍高信号审查</h2>
+<p>官方 GitHub 集成支持在 PR 中用 <code>@codex review</code> 请求审查，也可配置自动审查和仓库级规则。适合把本地实现与 PR 审查分成两个独立视角。</p>
+<h2>官方依据</h2>
+<ul>
+<li><a href="https://learn.chatgpt.com/docs/code-review">Code review</a></li>
+<li><a href="https://learn.chatgpt.com/docs/third-party/github">Codex code review in GitHub</a></li>
+</ul>
+</article><footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方镜像</span></footer></main></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，例如 AGENTS.md、自动化、权限"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>

@@ -5,7 +5,7 @@ import { marked } from 'marked';
 const root = process.cwd();
 const config = JSON.parse(fs.readFileSync(path.join(root, 'site.config.json'), 'utf8'));
 const nav = JSON.parse(fs.readFileSync(path.join(root, 'nav.json'), 'utf8'));
-const out = path.join(root, 'site');
+const out = path.join(root, 'docs');
 const base = config.basePath.replace(/\/$/, '');
 
 marked.use({ gfm: true, breaks: false });

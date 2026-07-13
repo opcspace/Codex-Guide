@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>自动化与 CI · Codex 实践指南</title>
+  <meta name="description" content="从验证过的人工流程升级到 Codex 定时任务、codex exec 与 GitHub Action。"><meta name="theme-color" content="#0b100d">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>更新于 2026-07-13</small></div><section class="nav-group"><p>开始</p><a class="nav-link" href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link" href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link" href="/Codex-Guide/start/first-task.html">完成第一个任务</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link" href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link" href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link" href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link" href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link active" href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link" href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link" href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link" href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link" href="/Codex-Guide/reference/sources.html">官方资料索引</a></section></aside>
+  <main class="content"><article class="article"><h1>先跑通，再自动跑</h1>
+<p>官方对自动化的建议很实用：先通过对话把行为和输出调准，确认流程可重复、容易审查，再把它设为自动化。自动化不该放大一个尚未弄清的提示词。</p>
+<h2>三个层级</h2>
+<h3>1. App 定时任务</h3>
+<p>适合周报、变更摘要、资料检查、每日简报。提示词应固定输入范围、输出位置、异常处理和完成条件。本地自动化依赖电脑处于唤醒状态且 App 运行。</p>
+<h3>2. <code>codex exec</code></h3>
+<p>非交互模式适合脚本、CI 和计划任务：</p>
+<pre><code class="language-bash">codex exec &quot;Review the current diff for correctness and output markdown&quot;
+</code></pre>
+<p>要求机器可解析时可使用结构化输出，并明确失败退出策略。不要默认给 CI 过大的写权限。</p>
+<h3>3. GitHub Action</h3>
+<p>官方 <code>openai/codex-action@v1</code> 可从 GitHub 事件触发 Codex，用于审查、应用补丁或在 CI 中运行任务。Action 会安装 CLI，并按配置权限执行 <code>codex exec</code>。</p>
+<h2>自动化任务合同</h2>
+<p>每个自动化应写清：</p>
+<ul>
+<li><strong>触发器</strong>：何时运行，避免重复触发；</li>
+<li><strong>输入</strong>：只读取哪些目录、PR 或数据源；</li>
+<li><strong>动作</strong>：是否允许写文件、发评论或开 PR；</li>
+<li><strong>验证</strong>：失败如何识别；</li>
+<li><strong>输出</strong>：固定路径或结构；</li>
+<li><strong>升级</strong>：遇到不确定性时停止并报告什么。</li>
+</ul>
+<h2>安全底线</h2>
+<p>最小权限、固定依赖、限制网络域名、保护秘密、保留日志。先让自动化只读运行一段时间，再逐步开放写操作。</p>
+<h2>官方依据</h2>
+<ul>
+<li><a href="https://openai.com/academy/codex-automations/">Automations</a></li>
+<li><a href="https://learn.chatgpt.com/docs/non-interactive-mode">Non-interactive mode</a></li>
+<li><a href="https://learn.chatgpt.com/docs/github-action">Codex GitHub Action</a></li>
+<li><a href="https://academy.openai.com/public/clubs/builders-etkn1/resources/codex-103-advanced-workflows-and-automation-2026-03-18">Advanced workflows and automation</a></li>
+</ul>
+</article><footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方镜像</span></footer></main></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，例如 AGENTS.md、自动化、权限"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>
