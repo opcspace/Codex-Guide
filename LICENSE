@@ -1,0 +1,11 @@
+OPCspace Guide Dual License
+
+Copyright (c) 2026 OPCspace
+
+1. Original written content under `content/`, generated documentation under `docs/`, and original visual content are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0):
+   https://creativecommons.org/licenses/by/4.0/legalcode
+
+2. Original build scripts and site software under `scripts/` and `assets/` are licensed under the Apache License 2.0:
+   https://www.apache.org/licenses/LICENSE-2.0
+
+Third-party names, trademarks, quoted material and linked resources remain the property of their respective owners and are not relicensed by this repository. Attribution must identify OPCspace, link to the source repository, and indicate modifications.

@@ -1,5 +1,7 @@
 # Codex 实践指南
 
+> **项目状态：OPCspace 旗舰项目 / 活跃维护** · 当前版本 `1.0.0` · [路线图](ROADMAP.md) · [更新记录](CHANGELOG.md) · [谁在使用](ADOPTERS.md)
+
 [![Deploy knowledge base](https://github.com/opcspace/Codex-Guide/actions/workflows/pages.yml/badge.svg)](https://github.com/opcspace/Codex-Guide/actions/workflows/pages.yml)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-在线阅读-9fe870?logo=github)](https://opcspace.github.io/Codex-Guide/)
 [![Content](https://img.shields.io/badge/内容-17%20篇中文实践-202a24)](https://opcspace.github.io/Codex-Guide/)
@@ -94,6 +96,17 @@ npx serve docs
 
 欢迎修正过期资料、补充官方来源和改进实践案例。请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。提交内容时附上官方链接、核查日期和可复现验证方式。
 
+适合第一次参与的任务会标记为 [`good first issue`](https://github.com/opcspace/Codex-Guide/labels/good%20first%20issue)。跨项目问题和社区建议统一进入 [OPCspace Discussions](https://github.com/orgs/opcspace/discussions)。
+
+- **欢迎外部贡献**：文档纠错、官方来源更新、脱敏案例、构建与可访问性改进；
+- **维护团队负责**：品牌、内容结构、发布节奏、商业课程与对外合作承诺。
+
 ## 声明
 
 本项目由 OPCspace 维护，不是 OpenAI 官方文档，也不代表 OpenAI。产品能力、价格、模型和权限以 OpenAI 官方当前说明及你的账户实际界面为准。
+
+## OPCspace 入口
+
+- 中文官网：[opcspace.com.cn](https://opcspace.com.cn/)
+- 国际入口：[opcspace.github.io](https://opcspace.github.io/)
+- GitHub 组织：[github.com/opcspace](https://github.com/opcspace)

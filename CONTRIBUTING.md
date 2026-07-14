@@ -2,6 +2,8 @@
 
 感谢你帮助这套中文实践知识库保持准确、实用和易读。
 
+本仓库遵循 [OPCspace 组织贡献指南](https://github.com/opcspace/.github/blob/main/CONTRIBUTING.md)。大范围结构调整请先创建 Issue，小型文档修正可以直接提交 PR。
+
 ## 适合提交的改动
 
 - 修正失效链接、过期入口或事实错误；
@@ -47,4 +49,3 @@ npm run build
 - [ ] 已检查生成页面
 
 维护者可能会根据官方资料更新、合并或调整内容结构。
-
