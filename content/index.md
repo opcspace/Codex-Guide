@@ -34,4 +34,14 @@ description: 从第一次委派到可靠自动化的 Codex 中文实践知识库
 
 每篇内容都标出官方依据，资料索引记录了核查日期。官方界面和功能会变化，因此操作入口以官方文档为准；本库重点沉淀不易过时的方法：任务边界、上下文工程、验证闭环和安全控制。
 
-继续阅读：[选择使用入口](start/choose-surface.html) · [官方资料索引](reference/sources.html)
+## 全览教程
+
+以下章节从《OpenAI Codex 与腾讯 WorkBuddy 实践教程全览》同步整理，覆盖 Codex 的入门、操作、行业实践与高级技巧。
+
+- [小白入门指南](start/codex-getting-started.html)：产品定位、四种入口、注册配置与项目/线程/任务概念。
+- [基本操作详解](practices/codex-basic-operations.html)：界面导览、Agent 模式、代码生成、测试调试与 PR 提交。
+- [不同领域实践心得](practices/codex-professional-insights.html)：前端、后端、全栈、数据、产品、教育、测试等角色案例。
+- [高级技巧与企业实践](practices/codex-advanced-enterprise.html)：AGENTS.md、工具对比与 Cisco / NVIDIA 部署经验。
+- [Codex 与 WorkBuddy 对比](reference/tool-comparison.html)：定位差异、综合对比、组合使用与入门路径。
+
+继续阅读：[选择使用入口](start/choose-surface.html) · [小白入门指南](start/codex-getting-started.html) · [官方资料索引](reference/sources.html)

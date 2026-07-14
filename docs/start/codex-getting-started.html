@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Codex 小白入门指南 · Codex 实践指南</title>
+  <meta name="description" content="OpenAI Codex 的入门路径：产品定位、访问方式、注册配置与核心概念。"><meta name="theme-color" content="#0b100d">
+  <meta property="og:title" content="Codex 小白入门指南 · Codex 实践指南"><meta property="og:description" content="OpenAI Codex 的入门路径：产品定位、访问方式、注册配置与核心概念。"><meta property="og:type" content="article">
+  <link rel="canonical" href="https://opcspace.github.io/Codex-Guide/start/codex-getting-started.html">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css"><link rel="stylesheet" href="/Codex-Guide/assets/reading.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body id="top">
+  <div class="reading-progress" data-progress aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>22 篇指南 · 更新于 2026-07-14</small></div><section class="nav-group"><p>开始</p><a class="nav-link"  href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link"  href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link"  href="/Codex-Guide/start/install-config.html">安装与基础配置</a><a class="nav-link"  href="/Codex-Guide/start/first-task.html">完成第一个任务</a><a class="nav-link active" aria-current="page" href="/Codex-Guide/start/codex-getting-started.html">小白入门指南</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link"  href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link"  href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link"  href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a><a class="nav-link"  href="/Codex-Guide/practices/end-to-end.html">端到端开发案例</a><a class="nav-link"  href="/Codex-Guide/practices/codex-basic-operations.html">基本操作详解</a><a class="nav-link"  href="/Codex-Guide/practices/codex-professional-insights.html">不同领域实践心得</a><a class="nav-link"  href="/Codex-Guide/practices/codex-advanced-enterprise.html">高级技巧与企业实践</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link"  href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link"  href="/Codex-Guide/workflows/configuration.html">配置、模式与 Profiles</a><a class="nav-link"  href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link"  href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link"  href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link"  href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link"  href="/Codex-Guide/reference/troubleshooting.html">故障排查手册</a><a class="nav-link"  href="/Codex-Guide/reference/glossary.html">术语速查</a><a class="nav-link"  href="/Codex-Guide/reference/sources.html">官方资料索引</a><a class="nav-link"  href="/Codex-Guide/reference/tool-comparison.html">Codex 与 WorkBuddy 对比</a></section></aside>
+  <main class="content">
+    <div class="page-meta"><span>开始</span><i></i><span>约 9 分钟</span><i></i><span>核查于 2026-07-14</span></div>
+    <article class="article"><h1>什么是 OpenAI Codex</h1>
+<h2 id="codex-的产品定位-从-智能补全-到-ai-编程代理-的范式转变">Codex 的产品定位：从”智能补全”到”AI 编程代理”的范式转变<a class="heading-anchor" href="#codex-的产品定位-从-智能补全-到-ai-编程代理-的范式转变" aria-label="复制此章节链接">#</a></h2>
+<p>早期的 AI 编程工具做的是”智能补全”——你写一行，它猜下一行。这种模式本质上还是”人主导、AI 辅助”，工具的能力天花板就是你敲键盘的速度。而 OpenAI Codex 代表的根本不同范式是：你给它一个任务描述，它自己规划、执行、验证，最后把结果交给你审查。 你不再是逐行敲代码的人，而是任务的定义者和结果的审查者。
+OpenAI 官方将 Codex 定义为”面向软件工程的 AI 编程智能体”（AI Software Engineering Agent）[^387^]。它的核心架构包含一个主代理（使用 GPT-5.4 或 GPT-5.5 作为推理模型）和多个子代理（使用 GPT-5.4 mini 执行快速并行的子任务）[^103^]。主代理负责理解需求并制定计划，子代理则像一支小型工程团队分工协作。正如一位拥有近 10 年经验的设计师分享的那样，她使用 Codex 后”一个周末解决了四五个过去完全一个人无法实现的开需求”，并特别强调 Codex 的可视化图形界面对非专业编程用户极其友好[^90^]。Codex 不会取代你的判断力，但它极大地降低了”把想法变成可运行代码”的门槛。</p>
+<h2 id="核心能力概览-代码生成-测试运行-自动提交-pr">核心能力概览：代码生成、测试运行、自动提交 PR<a class="heading-anchor" href="#核心能力概览-代码生成-测试运行-自动提交-pr" aria-label="复制此章节链接">#</a></h2>
+<p>Codex 的能力可归纳为五个环节[^99^]：规划——分析需求并制定执行计划；读取——自动读取项目中的相关文件理解上下文；执行——编写或修改代码、运行测试；验证——运行测试确认变更无误并生成可审查的 diff；提交——在 Cloud 模式下将变更整理成 Pull Request 提交到 GitHub[^105^][^20^]。这种端到端的流程意味着，你可以早上布置一批任务，下午回来审查完成的方案[^99^]。</p>
+<h1>四种访问方式详解</h1>
+<p>Codex 提供四种使用入口[^20^][^26^][^102^]：
+Web 版（chatgpt.com/codex）是最简单的入门方式，浏览器打开即用，所有计算在云端完成，适合想”先试试再说”的新手。你可以同时发起多个云端任务并行运行，完成后逐一审查。局限是对本地文件系统访问能力有限。
+桌面端 App（支持 macOS 和 Windows）是目前功能最完整的入口[^109^][^21^]，也是小白用户最推荐的选择[^85^]。它整合了项目管理、多线程并行、Git 操作、内置终端和浏览器预览。核心优势是 Worktree 并行机制，让多个 AI 代理在同一仓库上同时工作而不冲突[^372^]。
+CLI 命令行通过 npm install -g @openai/codex 安装[^26^]，是终端重度用户的首选。Codex CLI 用 Rust 编写，开源在 GitHub 上（Apache-2.0 协议），已有超过 75,600 stars[^124^]。它支持交互式 TUI 界面（运行 codex 进入对话模式）和非交互式模式（codex &quot;任务描述&quot; 直接执行），后者可以嵌入 CI/CD 流水线实现自动化。安装后运行 codex login 完成 ChatGPT 账户认证即可使用[^25^]。
+IDE 插件支持 VS Code（含 Cursor、Windsurf）、JetBrains 系列和 Xcode[^110^][^112^][^113^]。Codex 以侧边栏形式嵌入编辑器，你可以选中代码直接要求解释、重构或生成测试，结果以 diff 形式展示[^110^]。</p>
+<h2 id="四种访问方式对比">四种访问方式对比<a class="heading-anchor" href="#四种访问方式对比" aria-label="复制此章节链接">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Web 版</th>
+<th>桌面端 App</th>
+<th>CLI 命令行</th>
+<th>IDE 插件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>安装难度</td>
+<td>无需安装</td>
+<td>官网下载安装包</td>
+<td>npm 全局安装</td>
+<td>插件市场一键安装</td>
+</tr>
+<tr>
+<td>适合人群</td>
+<td>零代码基础的新手</td>
+<td>多数用户的首选</td>
+<td>终端重度用户</td>
+<td>编辑器常驻用户</td>
+</tr>
+<tr>
+<td>本地文件访问</td>
+<td>有限</td>
+<td>完整读写</td>
+<td>完整读写</td>
+<td>读写当前项目</td>
+</tr>
+<tr>
+<td>多任务并行</td>
+<td>云端并行</td>
+<td>Worktree 本地并行</td>
+<td>单会话（可配合 /fork）</td>
+<td>单任务</td>
+</tr>
+<tr>
+<td>GitHub 集成</td>
+<td>直接创建 PR</td>
+<td>内置 Git 操作 + PR</td>
+<td>需配合 git 命令</td>
+<td>需配合 git 命令</td>
+</tr>
+<tr>
+<td>运行环境</td>
+<td>OpenAI 云端</td>
+<td>本地 + 可选云端</td>
+<td>本地</td>
+<td>本地</td>
+</tr>
+<tr>
+<td>核心优势</td>
+<td>零门槛、后台运行</td>
+<td>功能最全、可视化审查</td>
+<td>自动化、脚本集成</td>
+<td>不离开编辑器</td>
+</tr>
+<tr>
+<td>主要局限</td>
+<td>依赖网络、本地访问弱</td>
+<td>暂不支持 Linux</td>
+<td>需学习命令行</td>
+<td>上下文受限于打开文件</td>
+</tr>
+</tbody></table>
+<p><em>数据来源：OpenAI 官方文档[^20^][^102^][^110^]及社区实测[^349^][^356^]</em>
+选择建议：不确定从哪开始就先试 Web 版；打算长期使用就选桌面端 App；已在用 VS Code 或 JetBrains 则直接装 IDE 插件。</p>
+<h1>注册与第一个任务</h1>
+<h2 id="chatgpt-账户登录与-mfa-设置">ChatGPT 账户登录与 MFA 设置<a class="heading-anchor" href="#chatgpt-账户登录与-mfa-设置" aria-label="复制此章节链接">#</a></h2>
+<p>Codex 包含在所有 ChatGPT 订阅方案中，Plus 方案（$20/月） 已覆盖完整的 Codex 访问权限[^98^][^100^]。登录有三种方式：ChatGPT 账户登录（推荐，运行 codex login 完成 OAuth 授权）[^25^]；API Key（设置环境变量 OPENAI_API_KEY 按量付费）；设备码（无浏览器环境使用）[^30^]。认证信息保存在 ~/.codex/auth.json[^25^]，建议为账户开启双重验证（MFA）防止额度被盗用。</p>
+<h2 id="连接-github-仓库">连接 GitHub 仓库<a class="heading-anchor" href="#连接-github-仓库" aria-label="复制此章节链接">#</a></h2>
+<p>连接 GitHub 后 Codex 可直接拉取仓库、执行任务并创建 PR[^20^]。在 Codex 界面点击”连接 GitHub”，授权仓库访问（权限是范围限定的，仅在你指定的仓库内操作）[^31^]，然后选择工作仓库和分支即可。</p>
+<h2 id="创建第一个任务">创建第一个任务<a class="heading-anchor" href="#创建第一个任务" aria-label="复制此章节链接">#</a></h2>
+<p>推荐桌面端 App 完成第一个任务：</p>
+<ul>
+<li>创建项目文件夹，如 ~/Codex-Projects/my-first-app。遵循“窄工作区”原则——不要把无关文件放入工作区[^27^]。</li>
+<li>打开 Codex 选择项目，点击”选择现有文件夹”，选中刚才创建的文件夹。</li>
+<li>选择 Local 工作模式（第一次使用建议选 Local，直接在当前目录工作）[^369^]。</li>
+<li>输入指令：“创建一个带用户认证的待办事项 Web 应用。使用 Python Flask 后端、SQLite 数据库、HTML+CSS 前端。实现用户注册/登录、添加待办、标记完成、删除功能。”</li>
+<li>观察工作过程：Codex 会展示思考过程（Thought）、读取的文件（Explored）和修改（Edited）。</li>
+<li>审查 diff：任务完成后逐行查看变更，不满意可直接在对话框中指出。</li>
+<li>运行验证：在内置终端运行 python app.py，用内置浏览器访问 localhost:5000 确认功能正常。
+小白用户的核心原则是“第一次不要追求大而全，先追求可验证”[^89^]。从具体目标开始，确保能看到、触摸到结果。如果你不知道某个技术概念（比如”Flask 是什么”），可以直接问 Codex 让它用白话解释到你懂为止——这是学习编程最自然的方式[^360^]。</li>
+</ul>
+<h1>核心概念：项目、线程与任务</h1>
+<h2 id="项目-project-代码库的上下文锚点">项目（Project）：代码库的上下文锚点<a class="heading-anchor" href="#项目-project-代码库的上下文锚点" aria-label="复制此章节链接">#</a></h2>
+<p>项目是 Codex 工作的基本单位，对应一个文件夹或 Git 仓库[^27^]。当你选择一个项目文件夹时，Codex 会把这个文件夹内的代码文件作为”上下文”加载进来——它知道你有哪些文件、项目结构是怎样的、用了什么技术栈。这种上下文感知能力是 Codex 超越普通聊天工具的关键：它不需要你把代码手动贴进对话框，而是主动读取和理解你的项目。
+新手常犯的错误是选一个过于宽泛的目录（比如直接把整个 ~/Documents 丢给 Codex）。正确的做法是为每个具体任务创建独立的项目文件夹，只包含相关代码和配置文件[^27^]。好的项目组织示例如下：</p>
+<pre><code>~/Codex-Projects/
+  ├── todo-app/          # 待办事项应用项目
+  ├── blog-backend/      # 博客后端 API
+  └── data-analysis/     # 数据分析脚本
+</code></pre>
+<h2 id="线程-thread-会话上下文与-worktree-机制">线程（Thread）：会话上下文与 Worktree 机制<a class="heading-anchor" href="#线程-thread-会话上下文与-worktree-机制" aria-label="复制此章节链接">#</a></h2>
+<p>线程是独立的对话和任务上下文，有自己的对话历史和工作目录[^23^]。线程有三种运行模式[^369^]：Local 直接在工作目录中运行；Worktree 创建独立的 Git 工作副本，多个线程可在同一仓库并行运行且不冲突——实测 3 个并行 Worktree 可将任务耗时从 42 分钟降至 18 分钟[^376^]；Cloud 在 OpenAI 云端服务器运行，适合长时间任务。线程之间还可以做 Handoff（移交）——在 Worktree 和 Local 之间安全迁移任务和代码[^374^]。</p>
+<h2 id="任务-task-在隔离环境中执行的完整工作单元">任务（Task）：在隔离环境中执行的完整工作单元<a class="heading-anchor" href="#任务-task-在隔离环境中执行的完整工作单元" aria-label="复制此章节链接">#</a></h2>
+<p>任务是 Codex 实际执行的工作单元[^99^]。每个指令都会创建一个任务，在隔离环境中运行：加载项目上下文、记录操作日志、引用测试输出验证、生成可审查的 diff，你可以逐块决定接受或拒绝[^105^]。
+线程与任务的区别：线程是长期工作线，可包含多轮对话；任务是单次执行的完整工作单元。一个线程可包含多个任务，共享同一上下文。比如在线程里先让 Codex”分析项目结构”，再追问”实现用户登录模块”——两个指令属于同一线程内的两个任务[^373^]。
+理解三者的层级关系很重要：一个项目包含多个线程，一个线程包含多个任务，每个任务在隔离环境中运行并产出可审查的结果。当你习惯了这套模型，就能像指挥小型工程团队一样使用 Codex——把不同工作分配给不同线程并行推进，最后统一审查成果。</p>
+</article>
+    <nav class="page-nav" aria-label="文章导航">
+    <a class="previous" href="/Codex-Guide/start/first-task.html"><small>← 上一篇</small><strong>完成第一个任务</strong></a>
+    <a class="next" href="/Codex-Guide/practices/prompting.html"><small>下一篇 →</small><strong>写出可执行的任务</strong></a>
+  </nav>
+    <footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方指南</span></footer>
+  </main>
+  <aside class="toc" aria-label="页内目录"><p>ON THIS PAGE</p><nav><a class="toc-level-2" href="#codex-的产品定位-从-智能补全-到-ai-编程代理-的范式转变">Codex 的产品定位：从”智能补全”到”AI 编程代理”的范式转变</a><a class="toc-level-2" href="#核心能力概览-代码生成-测试运行-自动提交-pr">核心能力概览：代码生成、测试运行、自动提交 PR</a><a class="toc-level-2" href="#四种访问方式对比">四种访问方式对比</a><a class="toc-level-2" href="#chatgpt-账户登录与-mfa-设置">ChatGPT 账户登录与 MFA 设置</a><a class="toc-level-2" href="#连接-github-仓库">连接 GitHub 仓库</a><a class="toc-level-2" href="#创建第一个任务">创建第一个任务</a><a class="toc-level-2" href="#项目-project-代码库的上下文锚点">项目（Project）：代码库的上下文锚点</a><a class="toc-level-2" href="#线程-thread-会话上下文与-worktree-机制">线程（Thread）：会话上下文与 Worktree 机制</a><a class="toc-level-2" href="#任务-task-在隔离环境中执行的完整工作单元">任务（Task）：在隔离环境中执行的完整工作单元</a></nav><a class="toc-top" href="#top">返回顶部 ↑</a></aside></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，快速定位实践"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>

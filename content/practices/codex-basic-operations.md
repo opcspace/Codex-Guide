@@ -1,0 +1,216 @@
+---
+title: Codex 基本操作详解
+description: Codex 界面导览、Agent 模式工作流、代码生成、测试调试与 PR 提交。
+---
+
+# . OpenAI Codex 基本操作详解
+上一章你完成了 Codex 的安装和认证，对四种访问方式有了整体认知。本章将深入每一个操作环节——从界面布局到 Agent 模式的工作流，从代码生成到测试调试，再到 Pull Request 的自动提交。读完这一章，你能够独立完成一次完整的”下达任务→AI 执行→审查结果→提交代码”闭环。
+## 界面导览与操作逻辑
+无论使用 Web 版、桌面端 App 还是 IDE 插件，Codex 的界面都遵循统一的三栏布局逻辑：左侧边栏管理任务，中间区域是执行日志，右侧是代码审查区。[^99^] 理解这个布局，你就掌握了在所有平台上操作 Codex 的通用规律。
+### 侧边栏：任务列表、项目切换、历史记录
+侧边栏是 Codex 的”指挥中心”。打开任意客户端，你会看到三个核心区域：
+任务列表 —— 每个你发出的指令都会成为一个独立任务（Task），以卡片形式展示在侧边栏。卡片上会标注任务状态：排队中（Queued）、执行中（Running）、待审查（Needs Review）或已完成（Done）。[^99^] 在桌面端 App 中，你可以同时创建多个任务，Codex Cloud 会在后台并行执行它们。这让你可以像使用”待办清单”一样工作——早上提交一批任务，回来后逐一审查结果。[^99^]
+项目切换 —— 点击项目下拉菜单，可以看到所有已配置的项目目录。Codex 以文件夹/仓库为单位进行工作，每个项目对应一个本地目录或 GitHub 仓库。[^27^] 切换项目时，Codex 会重新加载该目录的上下文，包括文件结构、AGENTS.md 配置以及 Git 状态。
+线程历史 —— 每个任务属于一个 Thread（线程），线程保留了完整的对话上下文和 Codex 的操作记录。你可以随时回溯查看 Codex 读取了哪些文件、做了哪些修改、运行了哪些命令。[^23^] 通过 /resume 命令可以恢复之前的会话，/fork 则可以基于现有会话创建新分支而不丢失原有上下文。[^334^]
+### 执行日志：实时查看 AI 的阅读、执行、问题解决过程
+点击任意任务卡片，中间面板会展开该任务的完整执行日志。这是 Codex 最透明也最有价值的功能之一——你可以实时观察 AI 的”思考过程”。[^99^]
+执行日志通常包含以下阶段：
+规划阶段 —— Codex 分析你的指令，制定执行计划。如果任务复杂，你可以先使用 Plan 模式（/plan 或 Shift + Tab 切换），让 Codex 在实施前提问澄清并构建更稳健的方案。[^334^]
+读取阶段 —— Codex 列出它读取的文件清单，包括配置文件、源代码、测试文件等。你可以看到它使用 read_file、rg（ripgrep）等工具搜索和读取代码上下文。[^345^] 如果你的 AGENTS.md 配置得当，Codex 会优先读取其中指定的关键文件和目录。
+执行阶段 —— Codex 展示每一次代码修改、每一个 Shell 命令的执行结果。它会使用 apply_patch 工具进行精确的代码编辑，优先并行化工具调用以提高效率。[^345^] 如果命令执行失败，日志会显示错误输出，Codex 会根据错误信息自动调整并重试。
+验证阶段 —— Codex 运行测试或检查命令（如 pytest、npm test、make lint），并在日志中展示测试结果。如果测试失败，它会进入迭代修复循环，直到测试通过或达到重试上限。[^99^]
+报告阶段 —— Codex 生成变更摘要，列出修改了哪些文件、运行了哪些测试、结果如何。[^99^]
+这种全透明的设计让你不必”盲信” AI 的输出——每一步都有据可查。
+### 审查流程：差异对比、接受/拒绝变更
+任务完成后，所有变更进入审查队列。Codex 的审查界面采用 Git diff 风格，清晰地标注每一处新增（绿色）和删除（红色）的代码。[^105^]
+你可以逐行审查 diff：
+- 接受整块变更（hunk） —— 点击 Accept，该段代码会被应用到工作目录
+- 拒绝整块变更 —— 点击 Reject，该段代码会被丢弃
+- 逐行反馈 —— 点击 diff 中的某一行，可以直接输入反馈，Codex 会将反馈作为上下文在下一轮对话中处理[^334^]
+CLI 用户可以通过 codex diff 命令查看变更，审查通过后使用 codex submit 或 Git 命令将变更合并到主分支。[^105^] IDE 插件（如 VS Code 扩展）则允许你在同一视图中审查简洁的摘要和变更行，无需切换到其他窗口。[^110^]
+对于团队用户，/review 命令提供了多种审查模式：对比基分支进行 PR 风格审查、审查未提交的变更、审查特定提交，或使用自定义审查指令。[^334^] 如果你的仓库中有 code_review.md 文件并在 AGENTS.md 中引用了它，Codex 会按照其中的规范执行审查。
+| 界面区域 | 核心功能 | 操作要点 |
+|------|---------------------------|----------------------|
+| 侧边栏 | 任务列表、项目切换、线程历史 | 可同时管理多个并行任务 |
+| 执行日志 | 实时查看 AI 读取、执行、调试全过程 | 包含规划→读取→执行→验证→报告五个阶段 |
+| 审查面板 | diff 对比、逐 hunk 接受/拒绝、行级反馈 | 支持 /review 多模式审查 |
+
+## Agent 模式工作流
+Codex 的核心工作方式是 Agent 模式（Agent Mode）。在这个模式下，Codex 不是简单地给你代码建议，而是作为一个自主的编码代理：读取代码库、规划变更、编写代码、运行测试并在失败时迭代修复——所有这些都不需要你在每一步 intervening。[^103^]
+### 下达任务：如何写高质量的 Prompt
+你的 Prompt 质量直接决定了 Codex 的输出质量。官方文档推荐在每次非平凡任务中包含四个要素：[^334^]
+目标（Goal） —— 你想要完成什么，以结果而非方法来表达。不要说”使用策略模式重构这个类”，而是说”让这个类的计费逻辑更容易扩展新计费方式”。
+上下文（Context） —— 哪些文件、目录、文档或错误信息与任务相关。你可以使用 @ 符号提及特定文件（如 @src/utils/date.ts），Codex 会将这些文件加载到上下文中。[^334^] 在大型代码库中，这是最大的”解锁点”——给 Codex 正确的上下文比写长篇指令更有效。
+约束（Constraints） —— 需要遵循的标准、架构选择、安全要求或团队规范。例如：“使用现有项目中的 Result<T, E> 模式处理错误，不要引入新的依赖”，或者”所有公共函数必须写类型注解和 docstring”。[^95^]
+完成标准（Done when） —— 任务完成前应该满足的可验证条件。例如：“所有测试通过”、“行为发生了预期变化”、“bug 不再复现”。明确的完成标准帮助 Codex 知道何时停止，避免过度修改。[^332^]
+以下是一个高质量 Prompt 的示例：
+```
+Goal: 为 parseDate 函数添加对 ISO 8601 时间戳格式的支持
+Context: @src/utils/date.ts, @src/utils/__tests__/date.test.ts
+Constraints: 使用现有 dayjs 依赖，不要引入 moment 等新库；
+  保持向后兼容现有日期字符串格式；错误处理使用 Result<T, E> 模式
+Done when: 新增至少 3 个 ISO 8601 格式的测试用例且全部通过；
+  现有测试不受影响
+```
+[^334^]
+对于复杂任务，建议先使用 Plan 模式。输入 /plan 或按 Shift + Tab 切换后，Codex 会先收集上下文、提出澄清问题，再制定实施计划。[^334^] 你也可以让 Codex 先”采访”你——告诉它”challenge my assumptions and turn the fuzzy idea into something concrete before writing code”。[^334^]
+### AI 自主执行：文件读取→代码生成→测试运行→迭代修复
+下达任务后，Codex 的 Agent 架构开始运转。其核心架构包括：主代理使用 GPT-5.4/GPT-5.5 作为主要推理模型，子代理使用 GPT-5.4 mini 执行快速并行的子任务。[^103^]
+具体执行流程如下：
+代码库索引 —— Codex 首先构建代码库索引，查询索引确定相关文件，仅将相关文件加载到上下文中。这种多阶段方法避免了将整个代码库塞入上下文窗口。[^103^]
+并行读取 —— Codex 使用 rg（ripgrep）搜索代码、并行读取多个文件。它会优先使用专用工具而非原始 Shell 命令，并最大化并行化工具调用以提高效率。[^345^]
+代码生成与编辑 —— 使用 apply_patch 工具进行精确的代码修改。Codex 遵循”先读取足够上下文，再批量执行逻辑编辑”的原则，避免反复微编辑。[^345^] 所有编辑都遵循现有代码库的约定——命名风格、格式化、本地化等。
+测试运行 —— Codex 自动检测项目的测试框架（pytest、Jest、Mocha 等），运行最相关的测试套件。它优先运行与修改文件相关的最小测试集，而非全部测试。[^334^]
+迭代修复 —— 如果测试失败，Codex 分析失败原因，修改代码并重新运行测试。这个循环会持续直到测试通过或 Codex 判断需要你的介入。[^99^]
+结果报告 —— Codex 生成包含变更摘要、修改文件列表、测试运行结果和执行日志的最终报告。[^99^]
+整个过程中，你可以随时在侧边栏查看实时进度，无需守在屏幕前等待。
+### 结果审查：修改了哪些文件、运行了哪些测试
+任务完成后，你需要审查两个核心信息：
+文件变更清单 —— Codex 会列出所有被修改的文件，并标注变更类型（新增、修改、删除）。点击任一文件可以查看详细的 diff。审查时注意：Codex 有时会修改你未预料到的文件（比如为了修复一个间接依赖），仔细确认每处变更是否符合预期。[^334^]
+测试执行报告 —— 查看 Codex 运行了哪些测试命令、通过了多少、失败了多少。一个好的实践是要求 Codex 报告：运行的确切命令、是否通过、任何失败、未能运行的检查及原因。[^87^] 如果测试全部通过但你对覆盖度有疑虑，可以追加指令：“Run the full test suite and report coverage”，让 Codex 补全遗漏。
+审查通过后，你可以选择将变更应用到工作目录，或者让 Codex 直接进入下一步——比如提交到 Git 或创建 Pull Request。
+## 代码生成与编辑操作
+Codex 的代码生成能力覆盖了从零创建项目到在大型代码库中重构的完整谱系。以下是三种典型场景的详细操作流程。
+### 从零创建新项目
+使用 Codex 启动新项目时，建议遵循以下步骤：
+创建并进入项目目录：
+```
+mkdir ~/Codex-Projects/my-new-app && cd ~/Codex-Projects/my-new-app
+```
+[^27^]
+初始化项目结构。在 CLI 中输入：
+```
+codex "Initialize a Python FastAPI project with the following structure: \
+  app/ for source code, tests/ for pytest tests, requirements.txt, \
+  and a README.md with setup instructions. Use async patterns \
+  and include a health check endpoint at /health."
+```
+[^26^]
+配置 AGENTS.md。项目初始化后，第一时间创建 AGENTS.md 文件：
+```
+codex "Create an AGENTS.md file that documents: tech stack (Python 3.12 + FastAPI + PostgreSQL), \
+  coding conventions (4-space indent, type annotations required, snake_case naming), \
+  test framework (pytest, 80% coverage), and key commands (make dev, make test, make lint)."
+```
+[^95^]
+审查生成的代码。Codex 生成初始项目后，通过 diff 审查每个文件，确认依赖版本合理、项目结构符合预期。如有不满意的地方，直接反馈：“Replace SQLAlchemy with asyncpg for raw queries”，Codex 会迭代修改。
+### 在现有代码库中添加功能
+在已有代码库中添加功能是日常使用最多的场景。关键在于给 Codex 足够的上下文：
+指定上下文文件。使用 @ 符号告诉 Codex 哪些文件与任务相关：
+```
+codex "Add a pagination endpoint to the users API. Context: @src/routes/users.py, \
+  @src/models/user.py, @src/services/user_service.py. Follow existing patterns \
+  for error handling and response format. Done when: endpoint returns paginated \
+  results with limit/offset params and all existing tests pass."
+```
+[^334^]
+让 Codex 自行探索。如果你不确定哪些文件相关，可以让 Codex 先探索：
+```
+codex "Explore this codebase to understand how the auth system works, then add \
+  a middleware that logs all authenticated requests. Start by reading the auth-related \
+  files and understanding the middleware chain."
+```
+[^345^]
+迭代精化。第一次生成的代码往往不是完美的。使用行级反馈功能指出需要调整的地方，Codex 会基于你的反馈精确修改。
+### 代码重构与跨文件修改
+重构是 Codex 的强项，尤其是涉及多个文件的大规模重构：
+```
+# 将 Dashboard 类组件重构为 React Hooks
+codex "Refactor the Dashboard component to React Hooks. Update all parent components \
+  that pass refs or use instance methods. Run tests after each major change."
+[^25^]
+
+# 安全批量重命名文件
+codex "Bulk-rename all *.jpeg files to *.jpg using git mv, and update all references \
+  in the source code. Done when: all image imports work and no broken references remain."
+[^25^]
+
+# 跨语言变量线程化（大型重构）
+codex "Thread a new 'tenant_id' variable through the entire request pipeline. \
+  Start at the middleware layer, pass it through all service calls, and ensure \
+  database queries are scoped by tenant_id. This spans Python backend and TypeScript frontend."
+[^13^]
+```
+跨文件重构时，Codex 会遵循”先搜索再修改”的工作流——先通过 rg 搜索所有引用点，再批量编辑。你可以在 AGENTS.md 中要求 Codex 在每次大型重构后生成迁移文档或更新 README。[^95^]
+## 测试与调试
+Codex 不只是生成代码——它能帮你运行测试、分析失败并自动修复。这个闭环是确保 AI 生成代码质量的关键环节。
+### 自动运行测试套件
+当你要求 Codex 生成代码时，养成习惯让它同时运行测试：[^334^]
+```
+# 生成测试并运行
+codex "Write unit tests for the parseDate function in src/utils/date.ts. \
+  Run the tests and report results. Done when: all tests pass."
+[^25^]
+
+# 运行最小相关测试集
+codex "Run the smallest relevant test suite for the changes I just made and report results."
+[^25^]
+
+# 全量测试 + 覆盖率
+codex "Run the full test suite and generate a coverage report. \
+  If coverage drops below 80%, add tests to bring it back up."
+```
+Codex 会自动检测项目使用的测试框架。对于 Python 项目，它会查找 pytest 或 unittest；对于 JavaScript/TypeScript 项目，它会查找 Jest、Mocha 或 Vitest。[^334^]
+测试验证的最佳实践包括：要求 Codex 报告运行的确切命令、是否通过、任何失败、未能运行的检查及原因。[^87^] 如果项目有 lint、格式化或类型检查（如 mypy、eslint、prettier），也一并要求 Codex 运行这些检查。[^334^]
+### 查看测试失败并自动修复
+当测试失败时，Codex 会展示失败信息并自动进入修复循环。你可以在日志中看到：
+- 失败摘要 —— Codex 提取失败测试的名称、错误消息和堆栈跟踪
+- 根因分析 —— Codex 尝试定位失败的根因，而不是表面修复
+- 修复方案 —— 提出最小化的代码修改
+- 重试验证 —— 重新运行测试，确认修复有效
+你可以通过以下指令引导调试过程：
+```
+# 调查失败测试
+codex "Investigate the failing tests in this repository. Identify the likely cause, \
+  propose a minimal fix, and verify the fix works."
+[^20^]
+
+# 修复 lint 错误
+codex "fix lint errors"
+[^20^]
+```
+对于更复杂的调试场景，Codex 可以使用浏览器 MCP 服务器进行端到端验证——在真实浏览器中运行应用、截图并与预期对比。这种验证方式尤其适合前端项目。[^87^]
+如果 Codex 自动修复多次后仍无法通过测试，它会暂停并请求你的介入。这时候你可以提供额外上下文，或者决定手动接管。
+## Pull Request 自动提交
+Codex 完成代码修改后，可以自动创建 Pull Request，将变更推送到 GitHub。这是 Codex Cloud 的核心工作流之一，也支持通过 GitHub Actions 在 CLI 环境中实现。
+### 自动生成 PR 描述
+Codex 会基于变更内容自动生成结构化的 PR 描述，包含以下部分：[^20^]
+- 摘要 —— 一句话概括变更目的
+- 变更详情 —— 按文件列出修改内容
+- 测试结果 —— 引用了哪些测试、测试结果如何
+- 审查注意事项 —— Codex 认为需要人工特别关注的地方
+对于使用了 .github/pull_request_template.md 的仓库，Codex CLI 会自动填充模板中的字段并注入 Fixes #issue_number 等关闭关键词。[^336^] 如果你希望 PR 描述更详细，可以在 Prompt 中指定格式：
+```
+Done when: changes are committed to a new branch with a PR description
+that includes Summary, Changes, Testing Notes, and Migration Guide sections.
+```
+[^346^]
+### 通过 GitHub 集成提交代码变更
+Codex Cloud 的 PR 提交流程如下：[^20^][^105^]
+- Codex 在隔离环境（Cloud sandbox）中完成任务
+- 生成可审查的 diff 和任务摘要
+- 创建新分支（通常以 codex/ 为前缀）
+- 用户审查通过后，点击”Create PR”按钮
+- Codex 通过 GitHub API 创建 Pull Request，包含完整的变更描述和测试引用
+对于 CLI 用户，可以使用以下命令完成提交：
+```
+# 查看变更
+codex diff
+
+# 提交变更（进入审查流程）
+codex submit
+
+# 或在单条指令中要求创建 PR
+codex "Investigate the failing checkout tests. Identify the likely cause, \
+  then make a minimal fix only if the cause is clear. Run the relevant checks \
+  and prepare a PR-ready summary."
+[^20^]
+```
+Codex 连接 GitHub 后，权限是范围限定的（scoped）——它只在每个特定任务的仓库上下文中读写，不会访问其他仓库。[^31^] 企业用户还可以启用自动代码审查：OpenAI 内部使用 Codex 审查 100% 的 PR，你可以在 GitHub 中 @Codex 触发审查，或设置为 PR 提交时自动审查。[^334^]
+对于更高级的自动化场景，社区提供了 GitHub Actions 方案。例如，codex-review-action 可以在 PR 评论中包含 /codex <指令> 时自动触发 Codex 执行代码修改并推送结果。[^344^] 另一个方案是 openai-codex-action，支持基于自然语言 Prompt 自动生成代码变更并创建 PR。[^337^]
+| PR 提交方式 | 适用场景 | 操作步骤 |
+|-------------------|-------------|------------------------------------------|
+| Codex Cloud 一键提交 | 云端完成任务后快速提交 | 审查 diff → 点击”Create PR” → 自动创建分支和 PR |
+| CLI codex submit | 本地 CLI 工作流 | codex diff 审查 → codex submit 提交 |
+| 指令内嵌 PR 要求 | 全自动任务 | 在 Prompt 中要求”prepare a PR-ready summary” |
+| GitHub Actions 集成 | CI/CD 自动化 | 配置 action，通过 /codex 评论触发或 PR 事件自动触发 |

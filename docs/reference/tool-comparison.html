@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN" style="--accent:#9fe870;--accent-rgb:159, 232, 112;--ink:#ecf5e8;--canvas:#0b100d">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Codex 与 WorkBuddy 对比 · Codex 实践指南</title>
+  <meta name="description" content="两大工具的定位差异、综合对比、组合使用场景与入门路径建议。"><meta name="theme-color" content="#0b100d">
+  <meta property="og:title" content="Codex 与 WorkBuddy 对比 · Codex 实践指南"><meta property="og:description" content="两大工具的定位差异、综合对比、组合使用场景与入门路径建议。"><meta property="og:type" content="article">
+  <link rel="canonical" href="https://opcspace.github.io/Codex-Guide/reference/tool-comparison.html">
+  <link rel="stylesheet" href="/Codex-Guide/assets/site.css"><link rel="stylesheet" href="/Codex-Guide/assets/reading.css">
+  <script>window.__GUIDE__={"base":"/Codex-Guide","title":"Codex 实践指南"}</script>
+  <script defer src="/Codex-Guide/assets/site.js"></script>
+</head>
+<body id="top">
+  <div class="reading-progress" data-progress aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar"><a class="brand" href="/Codex-Guide/index.html"><span class="brand-mark">&gt;_</span><span>CODEX / FIELD NOTES</span></a><div class="top-actions"><button class="search-button" data-search-open><span>搜索知识库</span><kbd>⌘ K</kbd></button><a class="repo-link" href="https://github.com/opcspace/Codex-Guide">GitHub ↗</a><button class="menu-button" data-menu aria-label="打开目录">目录</button></div></header>
+  <div class="layout"><aside class="sidebar" data-sidebar><div class="sidebar-intro"><span class="eyebrow">PRACTICE WIKI</span><strong>Codex 实践指南</strong><small>22 篇指南 · 更新于 2026-07-14</small></div><section class="nav-group"><p>开始</p><a class="nav-link"  href="/Codex-Guide/index.html">知识库首页</a><a class="nav-link"  href="/Codex-Guide/start/choose-surface.html">选择使用入口</a><a class="nav-link"  href="/Codex-Guide/start/install-config.html">安装与基础配置</a><a class="nav-link"  href="/Codex-Guide/start/first-task.html">完成第一个任务</a><a class="nav-link"  href="/Codex-Guide/start/codex-getting-started.html">小白入门指南</a></section><section class="nav-group"><p>核心实践</p><a class="nav-link"  href="/Codex-Guide/practices/prompting.html">写出可执行的任务</a><a class="nav-link"  href="/Codex-Guide/practices/repo-context.html">用 AGENTS.md 固化上下文</a><a class="nav-link"  href="/Codex-Guide/practices/review-test.html">审查、测试与交付</a><a class="nav-link"  href="/Codex-Guide/practices/end-to-end.html">端到端开发案例</a><a class="nav-link"  href="/Codex-Guide/practices/codex-basic-operations.html">基本操作详解</a><a class="nav-link"  href="/Codex-Guide/practices/codex-professional-insights.html">不同领域实践心得</a><a class="nav-link"  href="/Codex-Guide/practices/codex-advanced-enterprise.html">高级技巧与企业实践</a></section><section class="nav-group"><p>进阶工作流</p><a class="nav-link"  href="/Codex-Guide/workflows/parallel-work.html">并行任务与 Worktree</a><a class="nav-link"  href="/Codex-Guide/workflows/configuration.html">配置、模式与 Profiles</a><a class="nav-link"  href="/Codex-Guide/workflows/automation.html">自动化与 CI</a><a class="nav-link"  href="/Codex-Guide/workflows/skills-mcp.html">Skills 与 MCP</a></section><section class="nav-group"><p>安全与参考</p><a class="nav-link"  href="/Codex-Guide/safety/permissions.html">权限、安全与网络</a><a class="nav-link"  href="/Codex-Guide/reference/prompts.html">提示词配方库</a><a class="nav-link"  href="/Codex-Guide/reference/troubleshooting.html">故障排查手册</a><a class="nav-link"  href="/Codex-Guide/reference/glossary.html">术语速查</a><a class="nav-link"  href="/Codex-Guide/reference/sources.html">官方资料索引</a><a class="nav-link active" aria-current="page" href="/Codex-Guide/reference/tool-comparison.html">Codex 与 WorkBuddy 对比</a></section></aside>
+  <main class="content">
+    <div class="page-meta"><span>安全与参考</span><i></i><span>约 7 分钟</span><i></i><span>核查于 2026-07-14</span></div>
+    <article class="article"><h1>. 两大工具对比与组合使用建议</h1>
+<p>经过前面九章的探索，相信你已经对 OpenAI Codex 和腾讯 WorkBuddy 的能力边界有了清晰认识。Codex 以代码为中心重构软件工程工作流，WorkBuddy 以桌面为阵地重新定义办公效率。两者并非竞争关系，而是面向不同用户、不同场景的互补工具。本章从定位差异、综合对比、组合场景和入门路径四个维度，帮你做出最适合的选型决策。</p>
+<h2 id="定位差异与适用人群">定位差异与适用人群<a class="heading-anchor" href="#定位差异与适用人群" aria-label="复制此章节链接">#</a></h2>
+<h3 id="codex-面向开发者-代码为中心的-ai-代理">Codex：面向开发者，代码为中心的 AI 代理<a class="heading-anchor" href="#codex-面向开发者-代码为中心的-ai-代理" aria-label="复制此章节链接">#</a></h3>
+<p>OpenAI 将 Codex 定义为”面向软件工程的 AI 编程智能体”[^387^]。核心工作流——规划、读取、执行、验证、提交——全部围绕代码库展开[^99^]。无论生成 React 组件、重构 Python 后端还是编写 Playwright 测试，Codex 的上下文锚点始终是代码文件和 Git 仓库。截至 2026 年 6 月，Codex 周活跃用户突破 500 万，非开发者增速是开发者的 3 倍[^73^][^77^]，但核心设计哲学从未偏离”代码优先”。</p>
+<h3 id="workbuddy-面向职场人-办公为中心的-ai-智能体">WorkBuddy：面向职场人，办公为中心的 AI 智能体<a class="heading-anchor" href="#workbuddy-面向职场人-办公为中心的-ai-智能体" aria-label="复制此章节链接">#</a></h3>
+<p>WorkBuddy 定位”替你干活的数字员工”[^67^]，核心关键词是免部署、多专家、全平台[^388^]。四大能力板块——文件操作、数据处理、PPT 制作、编程开发——全部围绕桌面办公场景设计[^10^]，上下文锚点是本地文件系统和办公文档。885 万次月访问量和 831% 环比增速[^68^]，反映出职场人对”一句话搞定杂活”的强烈需求。与 Codex 的”对话即编程”不同，WorkBuddy 追求”对话即行动”——从写代码延伸到文件整理、发票汇总、PPT 生成等一切办公杂活[^63^]。</p>
+<h3 id="两者互补-codebuddy-技术底座-workbuddy-办公前端">两者互补：CodeBuddy（技术底座）+ WorkBuddy（办公前端）<a class="heading-anchor" href="#两者互补-codebuddy-技术底座-workbuddy-办公前端" aria-label="复制此章节链接">#</a></h3>
+<p>WorkBuddy 和 CodeBuddy 同属腾讯云 CodeBuddy 产品线，共享底层混元大模型和智能体内核[^62^]。CodeBuddy 是”给你一把更快的刀”——面向开发者的 IDE 插件；WorkBuddy 是”直接给你端上一盘菜”——面向职场人的桌面智能体[^248^]。对于国内用户，这意味着完整的生产力矩阵：写代码找 CodeBuddy，干杂活找 WorkBuddy[^66^]。</p>
+<h2 id="综合对比">综合对比<a class="heading-anchor" href="#综合对比" aria-label="复制此章节链接">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>OpenAI Codex</th>
+<th>腾讯 WorkBuddy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品定位</td>
+<td>面向软件工程的 AI 编程智能体</td>
+<td>AI 原生桌面办公智能体工作台</td>
+</tr>
+<tr>
+<td>目标用户</td>
+<td>软件开发者、技术团队（非开发者增速 3 倍[^73^]）</td>
+<td>产品、运营、行政、市场等全体职场人</td>
+</tr>
+<tr>
+<td>核心上下文</td>
+<td>代码库 / Git 仓库 / 项目文件</td>
+<td>本地文件系统 / 办公文档 / 桌面环境</td>
+</tr>
+<tr>
+<td>核心能力</td>
+<td>代码生成、测试运行、PR 提交、代码审查</td>
+<td>文件操作、数据处理、PPT 制作、编程开发</td>
+</tr>
+<tr>
+<td>产品形态</td>
+<td>Web / 桌面 App / CLI / IDE 插件</td>
+<td>独立桌面客户端（Win / macOS）</td>
+</tr>
+<tr>
+<td>入口方式</td>
+<td>ChatGPT 账户 / API Key</td>
+<td>微信扫码 / 企业微信 / QQ / 腾讯云账号</td>
+</tr>
+<tr>
+<td>定价模式</td>
+<td>Plus $20/月 或 API 按量付费[^98^]</td>
+<td>免费起步（5000 Credits）+ 积分消耗制[^54^]</td>
+</tr>
+<tr>
+<td>用户规模</td>
+<td>周活 500 万+[^77^]</td>
+<td>月访问 885 万，PC 端办公智能体第一[^68^]</td>
+</tr>
+<tr>
+<td>模型选择</td>
+<td>GPT-5.4 / GPT-5.5（固定）</td>
+<td>13 个模型自由切换（混元 / DeepSeek / GLM / Kimi 等）[^32^]</td>
+</tr>
+<tr>
+<td>生态扩展</td>
+<td>Skill 技能包 / MCP 协议</td>
+<td>SkillHub 2 万+技能 / 微信远程 / IMA 知识库[^217^]</td>
+</tr>
+<tr>
+<td>典型产出</td>
+<td>可运行的代码 / 通过测试的 PR</td>
+<td>可直接验收的文档、表格、PPT</td>
+</tr>
+<tr>
+<td>代表案例</td>
+<td>Sora Android 28 天上线（85% AI 代码）[^6^]、Cisco 1.8 万工程师[^157^]</td>
+<td>Excel 效率提升 95%[^2^]、财务分析 155 分钟→8 分钟</td>
+</tr>
+<tr>
+<td>最佳场景</td>
+<td>软件开发、代码重构、技术任务</td>
+<td>办公自动化、文档处理、数据分析、PPT 制作</td>
+</tr>
+</tbody></table>
+<p>这张表格的核心信息可以提炼为一句话：Codex 解决”代码怎么写”的问题，WorkBuddy 解决”办公杂活谁来干”的问题。</p>
+<h2 id="组合使用场景">组合使用场景<a class="heading-anchor" href="#组合使用场景" aria-label="复制此章节链接">#</a></h2>
+<h3 id="开发者-办公场景-用-codex-写代码-用-workbuddy-处理文档">开发者 + 办公场景：用 Codex 写代码，用 WorkBuddy 处理文档<a class="heading-anchor" href="#开发者-办公场景-用-codex-写代码-用-workbuddy-处理文档" aria-label="复制此章节链接">#</a></h3>
+<p>这是最适合技术从业者的组合模式。日常开发中，用 Codex（或 CodeBuddy）编写和调试代码，利用其 IDE 插件深度集成和 Worktree 并行机制提升编码效率；当需要整理周报、汇总数据、制作汇报 PPT 时，切换到 WorkBuddy，用自然语言一句话搞定。两者分工明确，互不干扰，覆盖技术工作的全链条。</p>
+<h3 id="团队协作-不同角色选择不同工具-形成-ai-生产力矩阵">团队协作：不同角色选择不同工具，形成 AI 生产力矩阵<a class="heading-anchor" href="#团队协作-不同角色选择不同工具-形成-ai-生产力矩阵" aria-label="复制此章节链接">#</a></h3>
+<p>研发团队以 Codex/CodeBuddy 为主力，专注软件交付；产品、设计、运营团队以 WorkBuddy 为主力，专注办公效率；测试和运维团队两者兼用——Codex 负责自动化测试脚本，WorkBuddy 负责测试报告生成。这种”各取所需、协同增效”的矩阵模式，是企业级 AI 落地的最佳实践。</p>
+<h2 id="入门路径建议">入门路径建议<a class="heading-anchor" href="#入门路径建议" aria-label="复制此章节链接">#</a></h2>
+<h3 id="零基础用户-先-workbuddy-逐步探索编程能力">零基础用户：先 WorkBuddy，逐步探索编程能力<a class="heading-anchor" href="#零基础用户-先-workbuddy-逐步探索编程能力" aria-label="复制此章节链接">#</a></h3>
+<p>如果你没有任何编程基础，建议从 WorkBuddy 开始。它的 Plan 模式让你只需描述需求就能完成任务[^11^]，不需要理解代码或技术概念。5000 Credits 的免费积分足够你完成大量日常任务[^54^]，等熟悉后再逐步探索它的 Craft 模式和编程能力。当工作中遇到需要定制化脚本或更复杂的技术任务时，再考虑学习 Codex 的基础用法。</p>
+<h3 id="开发者-同时使用-codex-workbuddy-覆盖全流程">开发者：同时使用 Codex + WorkBuddy，覆盖全流程<a class="heading-anchor" href="#开发者-同时使用-codex-workbuddy-覆盖全流程" aria-label="复制此章节链接">#</a></h3>
+<p>如果你是开发者，最优策略是”双线并行”。编码任务交给 Codex（或 CodeBuddy），利用其 AGENTS.md 配置[^106^]、多 Agent 并行和自动化测试能力；办公杂活交给 WorkBuddy，利用它的文件处理、PPT 生成和微信远程操控[^40^]能力。两者组合，既能保持技术产出的高质量，又能把周报、数据汇总、文档整理等事务性工作压缩到几分钟内完成。</p>
+<h3 id="团队决策者-按角色分工具-按场景建流程">团队决策者：按角色分工具，按场景建流程<a class="heading-anchor" href="#团队决策者-按角色分工具-按场景建流程" aria-label="复制此章节链接">#</a></h3>
+<p>如果你是团队负责人或 IT 决策者，建议按角色分配工具权限：技术团队配置 Codex/CodeBuddy 订阅，非技术团队配置 WorkBuddy 账号。同时建立标准化流程——例如”代码开发用 Codex → 文档交付用 WorkBuddy”、“数据处理用 WorkBuddy → 技术实现用 Codex”——让两种工具在团队层面形成闭环，最大化 AI 投资的回报率。</p>
+<p>从 Sora Android 28 天上线[^6^]到 WorkBuddy 3 分钟生成 PPT，从 Cisco 1.8 万工程师缺陷修复吞吐量提升 10-15 倍[^157^]到运营人员 Excel 效率提升 95%[^2^]——Codex 和 WorkBuddy 分别代表了 AI 生产力工具的两种成功范式：一个以代码为中心重构技术工作流，一个以桌面为阵地重新定义办公效率。
+选择工具的本质，是选择你希望在哪些领域放大自己的能力。 开发者以 Codex 为必选、WorkBuddy 为倍增器；职场人以 WorkBuddy 为起点、Codex 为进阶利器；团队以角色分工具、按场景建流程，才能构建完整的 AI 生产力矩阵。无论从哪里开始，关键是立即行动——在这场 AI 变革中，先用起来的人，已经走在了前面。</p>
+</article>
+    <nav class="page-nav" aria-label="文章导航">
+    <a class="previous" href="/Codex-Guide/reference/sources.html"><small>← 上一篇</small><strong>官方资料索引</strong></a>
+    <span></span>
+  </nav>
+    <footer><span>OPCspace · Codex Field Notes</span><span>基于官方资料整理 · 非官方指南</span></footer>
+  </main>
+  <aside class="toc" aria-label="页内目录"><p>ON THIS PAGE</p><nav><a class="toc-level-2" href="#定位差异与适用人群">定位差异与适用人群</a><a class="toc-level-3" href="#codex-面向开发者-代码为中心的-ai-代理">Codex：面向开发者，代码为中心的 AI 代理</a><a class="toc-level-3" href="#workbuddy-面向职场人-办公为中心的-ai-智能体">WorkBuddy：面向职场人，办公为中心的 AI 智能体</a><a class="toc-level-3" href="#两者互补-codebuddy-技术底座-workbuddy-办公前端">两者互补：CodeBuddy（技术底座）+ WorkBuddy（办公前端）</a><a class="toc-level-2" href="#综合对比">综合对比</a><a class="toc-level-2" href="#组合使用场景">组合使用场景</a><a class="toc-level-3" href="#开发者-办公场景-用-codex-写代码-用-workbuddy-处理文档">开发者 + 办公场景：用 Codex 写代码，用 WorkBuddy 处理文档</a><a class="toc-level-3" href="#团队协作-不同角色选择不同工具-形成-ai-生产力矩阵">团队协作：不同角色选择不同工具，形成 AI 生产力矩阵</a><a class="toc-level-2" href="#入门路径建议">入门路径建议</a><a class="toc-level-3" href="#零基础用户-先-workbuddy-逐步探索编程能力">零基础用户：先 WorkBuddy，逐步探索编程能力</a><a class="toc-level-3" href="#开发者-同时使用-codex-workbuddy-覆盖全流程">开发者：同时使用 Codex + WorkBuddy，覆盖全流程</a><a class="toc-level-3" href="#团队决策者-按角色分工具-按场景建流程">团队决策者：按角色分工具，按场景建流程</a></nav><a class="toc-top" href="#top">返回顶部 ↑</a></aside></div>
+  <dialog class="search" data-search><form method="dialog"><button aria-label="关闭">×</button></form><label>SEARCH / 搜索<input data-search-input autocomplete="off" placeholder="输入关键词，快速定位实践"></label><div class="search-results" data-search-results></div></dialog>
+</body></html>
