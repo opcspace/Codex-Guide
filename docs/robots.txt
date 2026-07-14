@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://opcspace.github.io/Codex-Guide/sitemap.xml

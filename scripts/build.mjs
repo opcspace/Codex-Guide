@@ -70,15 +70,81 @@ function pageNav(previous, next) {
 }
 
 function shell({ title, description, body, current, toc, section, readTime, previous, next }) {
-  const canonical = `${config.siteUrl || ''}${current === 'index.html' ? '/' : `/${current}`}`;
+  const isHome = current === 'index.html';
+  const pageTitle = isHome ? esc(config.title) : `${esc(title)} · ${esc(config.title)}`;
+  const ogTitle = isHome ? esc(config.title) : `${esc(title)} · ${esc(config.title)}`;
+  const pageDescription = esc(description || config.description);
+  const canonical = `${config.siteUrl || ''}${isHome ? '/' : `/${current}`}`;
+  const ogImage = config.ogImage || `${config.siteUrl || ''}/assets/og-image.png`;
+  const keywords = config.keywords || '';
+  const pageUrl = `${config.siteUrl || ''}/${current}`;
+  const firstHeading = toc[0]?.text || title;
+
+  const schemaWebsite = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: config.title,
+    url: config.siteUrl || '',
+    description: config.description,
+    publisher: {
+      '@type': 'Organization',
+      name: 'OPCspace',
+      url: 'https://github.com/opcspace'
+    }
+  });
+
+  const schemaArticle = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': isHome ? 'WebPage' : 'TechArticle',
+    headline: title,
+    description: description || config.description,
+    url: pageUrl,
+    image: ogImage,
+    dateModified: config.updated,
+    author: {
+      '@type': 'Organization',
+      name: 'OPCspace',
+      url: 'https://github.com/opcspace'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'OPCspace',
+      logo: {
+        '@type': 'ImageObject',
+        url: ogImage
+      }
+    }
+  });
+
   return `<!doctype html>
 <html lang="zh-CN" style="--accent:${config.accent};--accent-rgb:${config.accentRgb};--ink:${config.ink};--canvas:${config.canvas}">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${esc(title)} · ${esc(config.title)}</title>
-  <meta name="description" content="${esc(description || config.description)}"><meta name="theme-color" content="${config.canvas}">
-  <meta property="og:title" content="${esc(title)} · ${esc(config.title)}"><meta property="og:description" content="${esc(description || config.description)}"><meta property="og:type" content="article">
-  ${canonical ? `<link rel="canonical" href="${esc(canonical)}">` : ''}
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <title>${pageTitle}</title>
+  <meta name="description" content="${pageDescription}">
+  ${keywords ? `<meta name="keywords" content="${esc(keywords)}">` : ''}
+  <meta name="author" content="OPCspace">
+  <meta name="theme-color" content="${config.canvas}">
+  <link rel="canonical" href="${esc(canonical)}">
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="${esc(config.title)}">
+  <meta property="og:title" content="${ogTitle}">
+  <meta property="og:description" content="${pageDescription}">
+  <meta property="og:type" content="${isHome ? 'website' : 'article'}">
+  <meta property="og:url" content="${esc(pageUrl)}">
+  <meta property="og:image" content="${esc(ogImage)}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_CN">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${ogTitle}">
+  <meta name="twitter:description" content="${pageDescription}">
+  <meta name="twitter:image" content="${esc(ogImage)}">
+  <!-- Schema.org -->
+  <script type="application/ld+json">${schemaWebsite}</script>
+  <script type="application/ld+json">${schemaArticle}</script>
   <link rel="stylesheet" href="${base}/assets/site.css"><link rel="stylesheet" href="${base}/assets/reading.css">
   <script>window.__GUIDE__=${JSON.stringify({ base, title: config.title })}</script>
   <script defer src="${base}/assets/site.js"></script>
@@ -119,11 +185,26 @@ for (const [index, item] of flatNav.entries()) {
     previous: flatNav[index - 1],
     next: flatNav[index + 1]
   }));
-  pages.push({ title: meta.title || item.title, section: item.section, url: `${base}/${item.path}`, text: text.slice(0, 7000) });
+  pages.push({ title: meta.title || item.title, section: item.section, url: item.path, text: text.slice(0, 7000) });
 }
 
 fs.mkdirSync(path.join(out, 'assets'), { recursive: true });
-for (const file of ['site.css', 'reading.css', 'site.js']) fs.copyFileSync(path.join(root, 'assets', file), path.join(out, 'assets', file));
+for (const file of ['site.css', 'reading.css', 'site.js', 'og-image.png']) {
+  const src = path.join(root, 'assets', file);
+  if (fs.existsSync(src)) fs.copyFileSync(src, path.join(out, 'assets', file));
+}
 fs.writeFileSync(path.join(out, 'search-index.json'), JSON.stringify(pages));
 fs.writeFileSync(path.join(out, '.nojekyll'), '');
+
+// Sitemap
+const sitemapUrls = pages.map(p => {
+  const loc = `${config.siteUrl || ''}/${p.url}`;
+  return `  <url>\n    <loc>${esc(loc)}</loc>\n    <lastmod>${config.updated}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${p.url.endsWith('index.html') ? '1.0' : '0.7'}</priority>\n  </url>`;
+}).join('\n');
+fs.writeFileSync(path.join(out, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>\n`);
+
+// Robots.txt
+const robotsTxt = `User-agent: *\nAllow: /\nSitemap: ${config.siteUrl || ''}/sitemap.xml\n`;
+fs.writeFileSync(path.join(out, 'robots.txt'), robotsTxt);
+
 console.log(`Built ${pages.length} pages in ${path.relative(root, out)}/`);

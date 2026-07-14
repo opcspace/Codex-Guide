@@ -11,5 +11,7 @@
   "canvas": "#0b100d",
   "basePath": "/Codex-Guide/",
   "footer": "OPCspace · Codex Field Notes",
-  "updated": "2026-07-14"
+  "updated": "2026-07-14",
+  "keywords": "Codex, OpenAI Codex, AI 编程, 编程代理, 中文教程, AGENTS.md, Worktree, MCP, Skills, 代码审查",
+  "ogImage": "https://opcspace.github.io/Codex-Guide/assets/og-image.png"
 }
